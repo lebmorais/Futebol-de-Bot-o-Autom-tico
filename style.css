@@ -257,6 +257,50 @@ body {
     color: rgba(255,255,255,0.6);
 }
 
+/* Speed Toggle Button */
+.speed-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+.speed-toggle-btn .speed-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.speed-toggle-btn:hover {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.speed-toggle-btn.active {
+    background: rgba(234, 179, 8, 0.2);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 12px rgba(234, 179, 8, 0.3);
+    animation: speed-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes speed-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(234, 179, 8, 0.2); }
+    50% { box-shadow: 0 0 16px rgba(234, 179, 8, 0.5); }
+}
+
 /* Canvas */
 .canvas-wrapper {
     position: relative;

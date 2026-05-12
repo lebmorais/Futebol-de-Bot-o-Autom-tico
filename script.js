@@ -75,6 +75,14 @@ const btnExportSave = document.getElementById('btn-export-save');
 const btnImportSave = document.getElementById('btn-import-save');
 const importSaveInput = document.getElementById('import-save-input');
 
+// Speed Toggle
+const btnSpeedToggle = document.getElementById('btn-speed-toggle');
+btnSpeedToggle.onclick = () => {
+    gameSpeed = gameSpeed === 1 ? 2 : 1;
+    btnSpeedToggle.querySelector('.speed-label').innerText = gameSpeed === 1 ? '1x' : '2x';
+    btnSpeedToggle.classList.toggle('active', gameSpeed === 2);
+};
+
 // Formation UI
 const defVal = document.getElementById('def-val');
 const midVal = document.getElementById('mid-val');
@@ -94,6 +102,7 @@ let injuryTimeTotal = 0;
 let currentHalf = 1;
 let frameCount = 0;
 let stateTimer = 0;
+let gameSpeed = 1; // 1 = normal, 2 = fast forward
 
 let myFunds = 0;
 let availablePoints = 0;
@@ -1510,8 +1519,7 @@ function drawNotifications() {
     }
 }
 
-function loop() {
-    requestAnimationFrame(loop);
+function simulateStep() {
     handleGameState();
     if (gameState === STATE.MENU) return;
 
@@ -1541,6 +1549,16 @@ function loop() {
     }
 
     resolveCollisions();
+}
+
+function loop() {
+    requestAnimationFrame(loop);
+
+    for (let step = 0; step < gameSpeed; step++) {
+        simulateStep();
+    }
+
+    if (gameState === STATE.MENU) return;
 
     drawPitch();
     players.forEach(p => p.draw(ctx));
