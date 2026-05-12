@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Button Soccer - League</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Main Menu -->
+    <div id="main-menu" class="menu-container">
+        <div class="menu-box">
+            <h1>BRASILEIRÃO DE BOTÃO</h1>
+            <p>Selecione um time para acompanhar o campeonato (38 rodadas)</p>
+            <h2 style="margin-top: 15px; font-size: 16px;">SÉRIE A</h2>
+            <div id="team-grid-a" class="team-grid">
+                <!-- Teams A -->
+            </div>
+            <h2 style="margin-top: 15px; font-size: 16px;">SÉRIE B</h2>
+            <div id="team-grid-b" class="team-grid">
+                <!-- Teams B -->
+            </div>
+            <h2 style="margin-top: 15px; font-size: 16px;">SÉRIE C</h2>
+            <div id="team-grid-c" class="team-grid">
+                <!-- Teams C -->
+            </div>
+            <div class="menu-actions">
+                <button id="btn-open-custom-team" class="btn" style="background: #a855f7; color: white;">CRIAR TIME CUSTOM</button>
+                <button id="start-league-btn" class="btn hidden">NOVO CAMPEONATO</button>
+                <button id="continue-league-btn" class="btn btn-secondary hidden">CONTINUAR SALVO</button>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
+                <button id="btn-export-save" class="btn-small" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); flex: 1;">⬇️ Exportar Save</button>
+                <button id="btn-import-save" class="btn-small" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); flex: 1;">⬆️ Importar Save</button>
+                <input type="file" id="import-save-input" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- League Layout -->
+    <div id="league-view" class="league-container hidden">
+        
+        <!-- Game Area -->
+        <div class="game-column">
+            <header class="scoreboard">
+                <div class="team-info">
+                    <div class="color-swatch team-a-color" id="swatch-a"></div>
+                    <h2 id="team-a-name">TIME A</h2>
+                </div>
+                
+                <div class="score-display">
+                    <div class="score">
+                        <span id="score-a">0</span>
+                        <span class="divider">X</span>
+                        <span id="score-b">0</span>
+                    </div>
+                    <div class="match-info">
+                        <span id="match-time">00:00</span>
+                        <span id="match-period">1º TEMPO</span>
+                    </div>
+                </div>
+
+                <div class="team-info">
+                    <h2 id="team-b-name">TIME B</h2>
+                    <div class="color-swatch team-b-color" id="swatch-b"></div>
+                </div>
+            </header>
+
+            <div class="canvas-wrapper">
+                <canvas id="gameCanvas" width="1000" height="600"></canvas>
+                
+                <!-- Overlays -->
+                <div id="overlay" class="overlay hidden">
+                    
+                    <!-- Generic Message / End of Match -->
+                    <div id="overlay-msg-box" class="overlay-content hidden">
+                        <h1 id="overlay-title">MENSAGEM</h1>
+                        <button id="overlay-btn-next" class="btn">AVANÇAR</button>
+                    </div>
+
+                    <!-- Formation Builder -->
+                    <div id="overlay-formation-box" class="overlay-content hidden">
+                        <h2 style="color: var(--accent-color); margin-bottom: 5px;">TÁTICA DO SEU TIME</h2>
+                        <p class="formation-match-text" id="formation-match-text" style="color: #a1a1aa; margin-bottom: 20px;">Preparação de Partida</p>
+                        
+                        <div class="formation-controls">
+                            <div class="f-row">
+                                <span>Zagueiros (DEF):</span>
+                                <div class="f-spinners">
+                                    <button class="btn-small" id="def-minus">-</button>
+                                    <span id="def-val" class="f-val">4</span>
+                                    <button class="btn-small" id="def-plus">+</button>
+                                </div>
+                            </div>
+                            <div class="f-row">
+                                <span>Meio-Campo (MID):</span>
+                                <div class="f-spinners">
+                                    <button class="btn-small" id="mid-minus">-</button>
+                                    <span id="mid-val" class="f-val">4</span>
+                                    <button class="btn-small" id="mid-plus">+</button>
+                                </div>
+                            </div>
+                            <div class="f-row">
+                                <span>Atacantes (ATT):</span>
+                                <div class="f-spinners">
+                                    <button class="btn-small" id="att-minus">-</button>
+                                    <span id="att-val" class="f-val">2</span>
+                                    <button class="btn-small" id="att-plus">+</button>
+                                </div>
+                            </div>
+                            <div class="f-total" id="formation-total" style="margin-top: 15px; font-weight: bold;">
+                                Jogadores de Linha: <span id="f-count">10</span>/10
+                            </div>
+                            
+                            <div class="f-row" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                                <span>Postura:</span>
+                                <select id="team-attitude" class="attitude-select">
+                                    <option value="defensive" selected>Defensiva (Normal)</option>
+                                    <option value="offensive">Ofensiva (Avançada)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button id="overlay-btn-play" class="btn" style="margin-top: 20px; width: 100%;">IR PARA O CAMPO</button>
+                    </div>
+                    
+                    <!-- Team Edit Modal -->
+                    <div id="team-edit-modal" class="overlay-content hidden" style="width: 450px;">
+                        <h2 style="color: var(--accent-color); margin-bottom: 5px;" id="edit-team-name">NOME DO TIME</h2>
+                        <p style="color: #a1a1aa; margin-bottom: 10px;">Overall: <span id="edit-team-ovr" style="color: white; font-weight: bold;">0</span>/100</p>
+                        
+                        <div id="edit-club-info" style="margin-bottom: 15px; text-align: center;">
+                            <div id="edit-funds-container" style="color: #22c55e; font-weight: bold; margin-bottom: 5px;">Saldo: R$ <span id="edit-my-funds">0</span></div>
+                            <!-- edit-pts-container removed -->
+                            <div style="color: #a1a1aa; font-size: 14px; margin-bottom: 5px;">Taxa de Vitória: <span id="edit-win-rate">0%</span></div>
+                            
+                            <div id="edit-match-history" style="max-height: 80px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 6px; font-size: 12px; margin-bottom: 10px;">
+                                <!-- History injected here -->
+                            </div>
+                        </div>
+                        
+                        <div class="formation-controls">
+                            <div class="f-row">
+                                <span title="Capacidade de direcionar o chute para o gol (em vez de só pra frente)">Precisão:</span>
+                                <div style="display:flex; align-items:center; gap: 10px;">
+                                    <span id="pre-cost" style="font-size:12px; color:#22c55e; width:80px; text-align:right;"></span>
+                                    <div class="f-spinners">
+                                        <button class="btn-small" id="pre-minus">-</button>
+                                        <span id="pre-val" class="f-val">15</span>
+                                        <button class="btn-small" id="pre-plus">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="f-row">
+                                <span title="Menor chance de errar a bola no chute">Finalização:</span>
+                                <div style="display:flex; align-items:center; gap: 10px;">
+                                    <span id="fin-cost" style="font-size:12px; color:#22c55e; width:80px; text-align:right;"></span>
+                                    <div class="f-spinners">
+                                        <button class="btn-small" id="fin-minus">-</button>
+                                        <span id="fin-val" class="f-val">15</span>
+                                        <button class="btn-small" id="fin-plus">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="f-row">
+                                <span title="Força do avanço">Velocidade:</span>
+                                <div style="display:flex; align-items:center; gap: 10px;">
+                                    <span id="spd-cost" style="font-size:12px; color:#22c55e; width:80px; text-align:right;"></span>
+                                    <div class="f-spinners">
+                                        <button class="btn-small" id="spd-minus">-</button>
+                                        <span id="spd-val" class="f-val">15</span>
+                                        <button class="btn-small" id="spd-plus">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="f-row">
+                                <span title="Manutenção da força durante o jogo">Resistência:</span>
+                                <div style="display:flex; align-items:center; gap: 10px;">
+                                    <span id="stm-cost" style="font-size:12px; color:#22c55e; width:80px; text-align:right;"></span>
+                                    <div class="f-spinners">
+                                        <button class="btn-small" id="stm-minus">-</button>
+                                        <span id="stm-val" class="f-val">15</span>
+                                        <button class="btn-small" id="stm-plus">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- buy-point-btn removed -->
+                        <button id="edit-team-save" class="btn" style="margin-top: 10px; width: 100%; padding: 10px;">FECHAR</button>
+                    </div>
+
+                    <!-- Season End Modal -->
+                    <div id="season-end-modal" class="overlay-content hidden" style="max-width: 500px; max-height: 80vh; overflow-y: auto;">
+                        <h2 style="color: var(--accent-color); margin-bottom: 20px;">FIM DA TEMPORADA</h2>
+                        <div id="season-relegation-info" style="color: white; text-align: left; margin-bottom: 20px;">
+                        </div>
+                        <button class="btn" id="btn-next-season">INICIAR PRÓXIMA TEMPORADA</button>
+                    </div>
+
+                    <!-- Trophy Room Modal -->
+                    <div id="trophy-room-modal" class="overlay-content hidden" style="width: 450px;">
+                        <h2 style="color: #fbbf24; margin-bottom: 20px;">🏆 SALA DE TROFÉUS</h2>
+                        <div style="display: flex; width: 100%; gap: 10px; margin-bottom: 15px;">
+                            <button id="trophy-tab-a" class="btn-small" style="flex: 1; border: 1px solid var(--accent-color);">Série A</button>
+                            <button id="trophy-tab-b" class="btn-small" style="flex: 1; opacity: 0.5;">Série B</button>
+                            <button id="trophy-tab-c" class="btn-small" style="flex: 1; opacity: 0.5;">Série C</button>
+                        </div>
+                        <div id="trophy-list" style="max-height: 250px; overflow-y: auto; text-align: left; padding-right: 5px;">
+                            <!-- Trophies injected here -->
+                        </div>
+                        <button id="btn-close-trophy-room" class="btn btn-secondary" style="margin-top: 20px; width: 100%; padding: 10px;">FECHAR</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+            
+            <!-- Schedule Panel (Below Canvas) -->
+            <div id="schedule-panel" class="sidebar-panel" style="margin-top: 15px; width: 100%; max-width: 1000px; box-sizing: border-box;">
+                <div class="panel-header">
+                    <h3 style="margin:0;">CRONOGRAMA DO CLUBE</h3>
+                </div>
+                <div id="schedule-list" style="display: flex; overflow-x: auto; gap: 10px; padding: 10px 0; scroll-behavior: smooth; width: 100%;">
+                    <!-- Schedule cards injected here -->
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Sidebar Area -->
+        <div class="sidebar-column">
+            
+            <div class="sidebar-panel live-scores">
+                <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3>RODADA <span id="current-round-text">1</span> DE 38</h3>
+                    <h3 style="color: #22c55e;">R$ <span id="my-funds-text">0</span></h3>
+                </div>
+                <ul id="live-matches-list" class="matches-list">
+                    <!-- Live matches injected here -->
+                </ul>
+            </div>
+
+            <div class="sidebar-panel standings">
+                <div class="panel-header" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                    <div style="display: flex; width: 100%; gap: 10px;">
+                        <button id="tab-serie-a" class="btn-small" style="flex: 1; border: 1px solid var(--accent-color);">Série A</button>
+                        <button id="tab-serie-b" class="btn-small" style="flex: 1; opacity: 0.5;">Série B</button>
+                        <button id="tab-serie-c" class="btn-small" style="flex: 1; opacity: 0.5;">Série C</button>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h3 style="margin:0;">CLASSIFICAÇÃO</h3>
+                        <button id="btn-open-trophy-room" style="background: transparent; border: none; cursor: pointer; font-size: 20px; outline: none; transition: transform 0.2s;" title="Sala de Troféus" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏆</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="standings-table">
+                        <thead>
+                            <tr>
+                                <th title="Posição">#</th>
+                                <th class="text-left">Time</th>
+                                <th title="Pontos">P</th>
+                                <th title="Jogos">J</th>
+                                <th title="Vitórias">V</th>
+                                <th title="Empates">E</th>
+                                <th title="Derrotas">D</th>
+                                <th title="Saldo de Gols">SG</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standings-body">
+                            <!-- Standings injected here -->
+                        </tbody>
+                    </table>
+
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <!-- Custom Team Modal -->
+    <div id="custom-team-modal" class="overlay hidden" style="z-index: 200;">
+        <div class="overlay-content" style="width: 400px;">
+            <h2 style="color: #a855f7; margin-bottom: 20px;">CRIAR SEU CLUBE</h2>
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: #a1a1aa;">Nome do Clube:</label>
+                <input type="text" id="custom-team-name" maxlength="15" placeholder="Ex: Galáticos FC" style="width: 100%; padding: 10px; border-radius: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-family: inherit; outline: none;">
+            </div>
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: #a1a1aa;">Cor Principal:</label>
+                <input type="color" id="custom-team-color" value="#a855f7" style="width: 100%; height: 40px; border: none; border-radius: 6px; background: none; cursor: pointer;">
+            </div>
+            <div style="text-align: left; margin-bottom: 25px;">
+                <label style="display: block; margin-bottom: 5px; color: #a1a1aa;">Substituir na Série C:</label>
+                <select id="custom-team-replace" style="width: 100%; padding: 10px; border-radius: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-family: inherit; outline: none;">
+                    <!-- Options injected via JS -->
+                </select>
+            </div>
+            <p style="font-size: 12px; color: #ef4444; margin-bottom: 15px;">Aviso: Seu time começará na Série C com todos os atributos zerados (Modo Hardcore)!</p>
+            <button id="btn-save-custom-team" class="btn" style="width: 100%; margin-bottom: 10px; background: #a855f7; color: white;">FUNDAR CLUBE</button>
+            <button id="btn-cancel-custom-team" class="btn btn-secondary" style="width: 100%; padding: 10px;">CANCELAR</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
