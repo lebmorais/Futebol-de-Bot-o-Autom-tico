@@ -18,13 +18,13 @@
             <div id="team-grid-a" class="team-grid">
                 <!-- Teams A -->
             </div>
-            <h2 style="margin-top: 15px; font-size: 16px;">SÉRIE B</h2>
-            <div id="team-grid-b" class="team-grid">
-                <!-- Teams B -->
+            
+            <div style="margin: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                <input type="text" id="team-search" placeholder="Buscar clube (Série B, C ou Sem Divisão)..." style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: white; font-family: inherit; outline: none; font-size: 16px;">
             </div>
-            <h2 style="margin-top: 15px; font-size: 16px;">SÉRIE C</h2>
-            <div id="team-grid-c" class="team-grid">
-                <!-- Teams C -->
+            
+            <div id="search-results-grid" class="team-grid hidden" style="margin-bottom: 30px;">
+                <!-- Search results -->
             </div>
             <div class="menu-actions">
                 <button id="btn-open-custom-team" class="btn" style="background: #a855f7; color: white;">CRIAR TIME CUSTOM</button>
@@ -293,6 +293,24 @@
             <div style="text-align: left; margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; color: #a1a1aa;">Cor Principal:</label>
                 <input type="color" id="custom-team-color" value="#a855f7" style="width: 100%; height: 40px; border: none; border-radius: 6px; background: none; cursor: pointer;">
+            </div>
+            <div style="text-align: left; margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: #a1a1aa;">Estado (Federação):</label>
+                <select id="custom-team-state" style="width: 100%; padding: 10px; border-radius: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-family: inherit; outline: none;">
+                    <option value="SP">São Paulo (SP)</option>
+                    <option value="RJ">Rio de Janeiro (RJ)</option>
+                    <option value="MG">Minas Gerais (MG)</option>
+                    <option value="RS">Rio Grande do Sul (RS)</option>
+                    <option value="PR">Paraná (PR)</option>
+                    <option value="SC">Santa Catarina (SC)</option>
+                    <option value="BA">Bahia (BA)</option>
+                    <option value="PE">Pernambuco (PE)</option>
+                    <option value="CE">Ceará (CE)</option>
+                    <option value="GO">Goiás (GO)</option>
+                    <option value="PA">Pará (PA)</option>
+                    <option value="AM">Amazonas (AM)</option>
+                    <option value="OUTRO">Outro / Neutro</option>
+                </select>
             </div>
             <div style="text-align: left; margin-bottom: 25px;">
                 <label style="display: block; margin-bottom: 5px; color: #a1a1aa;">Substituir na Série C:</label>

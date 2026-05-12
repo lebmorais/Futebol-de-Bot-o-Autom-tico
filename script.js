@@ -101,72 +101,72 @@ let myMatchHistory = [];
 
 // Serie A Teams
 const SERIE_A_TEAMS = [
-    { n: 'Athletico-PR', c: '#c8102e', d: '#000000', fin: 14, spd: 14, stm: 15, pre: 15 },
-    { n: 'Atlético-MG', c: '#000000', d: '#111111', fin: 16, spd: 15, stm: 16, pre: 16 },
-    { n: 'Bahia', c: '#0033a0', d: '#c8102e', fin: 15, spd: 14, stm: 14, pre: 15 },
-    { n: 'Botafogo', c: '#000000', d: '#111111', fin: 19, spd: 18, stm: 18, pre: 18 },
-    { n: 'Chapecoense', c: '#006437', d: '#ffffff', fin: 8, spd: 9, stm: 10, pre: 8 },
-    { n: 'Corinthians', c: '#ffffff', d: '#000000', fin: 14, spd: 13, stm: 15, pre: 15 },
-    { n: 'Coritiba', c: '#005f33', d: '#ffffff', fin: 9, spd: 10, stm: 10, pre: 9 },
-    { n: 'Cruzeiro', c: '#0f3c83', d: '#0a2756', fin: 15, spd: 15, stm: 14, pre: 15 },
-    { n: 'Flamengo', c: '#c3281e', d: '#000000', fin: 19, spd: 18, stm: 17, pre: 18 },
-    { n: 'Fluminense', c: '#8a1538', d: '#006a4e', fin: 15, spd: 14, stm: 13, pre: 14 },
-    { n: 'Grêmio', c: '#0d80bf', d: '#000000', fin: 14, spd: 14, stm: 15, pre: 14 },
-    { n: 'Internacional', c: '#e5053a', d: '#a60026', fin: 15, spd: 15, stm: 16, pre: 15 },
-    { n: 'Mirassol', c: '#ffcc00', d: '#006437', fin: 10, spd: 11, stm: 11, pre: 10 },
-    { n: 'Palmeiras', c: '#006437', d: '#004a28', fin: 18, spd: 18, stm: 19, pre: 18 },
-    { n: 'RB Bragantino', c: '#ffffff', d: '#c8102e', fin: 14, spd: 16, stm: 16, pre: 15 },
-    { n: 'Remo', c: '#001a33', d: '#ffffff', fin: 7, spd: 8, stm: 9, pre: 7 },
-    { n: 'Santos', c: '#ffffff', d: '#000000', fin: 11, spd: 12, stm: 11, pre: 12 },
-    { n: 'São Paulo', c: '#ff0000', d: '#000000', fin: 16, spd: 15, stm: 16, pre: 16 },
-    { n: 'Vasco da Gama', c: '#000000', d: '#ffffff', fin: 13, spd: 14, stm: 13, pre: 14 },
-    { n: 'Vitória', c: '#c61d23', d: '#000000', fin: 11, spd: 12, stm: 11, pre: 10 }
+    { n: 'Athletico-PR', c: '#c8102e', d: '#000000', fin: 14, spd: 14, stm: 15, pre: 15, state: 'PR' },
+    { n: 'Atlético-MG', c: '#000000', d: '#111111', fin: 16, spd: 15, stm: 16, pre: 16, state: 'MG' },
+    { n: 'Bahia', c: '#0033a0', d: '#c8102e', fin: 15, spd: 14, stm: 14, pre: 15, state: 'BA' },
+    { n: 'Botafogo', c: '#000000', d: '#111111', fin: 19, spd: 18, stm: 18, pre: 18, state: 'RJ' },
+    { n: 'Chapecoense', c: '#006437', d: '#ffffff', fin: 8, spd: 9, stm: 10, pre: 8, state: 'SC' },
+    { n: 'Corinthians', c: '#ffffff', d: '#000000', fin: 14, spd: 13, stm: 15, pre: 15, state: 'SP' },
+    { n: 'Coritiba', c: '#005f33', d: '#ffffff', fin: 9, spd: 10, stm: 10, pre: 9, state: 'PR' },
+    { n: 'Cruzeiro', c: '#0f3c83', d: '#0a2756', fin: 15, spd: 15, stm: 14, pre: 15, state: 'MG' },
+    { n: 'Flamengo', c: '#c3281e', d: '#000000', fin: 19, spd: 18, stm: 17, pre: 18, state: 'RJ' },
+    { n: 'Fluminense', c: '#8a1538', d: '#006a4e', fin: 15, spd: 14, stm: 13, pre: 14, state: 'RJ' },
+    { n: 'Grêmio', c: '#0d80bf', d: '#000000', fin: 14, spd: 14, stm: 15, pre: 14, state: 'RS' },
+    { n: 'Internacional', c: '#e5053a', d: '#a60026', fin: 15, spd: 15, stm: 16, pre: 15, state: 'RS' },
+    { n: 'Mirassol', c: '#ffcc00', d: '#006437', fin: 10, spd: 11, stm: 11, pre: 10, state: 'SP' },
+    { n: 'Palmeiras', c: '#006437', d: '#004a28', fin: 18, spd: 18, stm: 19, pre: 18, state: 'SP' },
+    { n: 'RB Bragantino', c: '#ffffff', d: '#c8102e', fin: 14, spd: 16, stm: 16, pre: 15, state: 'SP' },
+    { n: 'Remo', c: '#001a33', d: '#ffffff', fin: 7, spd: 8, stm: 9, pre: 7, state: 'PA' },
+    { n: 'Santos', c: '#ffffff', d: '#000000', fin: 11, spd: 12, stm: 11, pre: 12, state: 'SP' },
+    { n: 'São Paulo', c: '#ff0000', d: '#000000', fin: 16, spd: 15, stm: 16, pre: 16, state: 'SP' },
+    { n: 'Vasco da Gama', c: '#000000', d: '#ffffff', fin: 13, spd: 14, stm: 13, pre: 14, state: 'RJ' },
+    { n: 'Vitória', c: '#c61d23', d: '#000000', fin: 11, spd: 12, stm: 11, pre: 10, state: 'BA' }
 ];
 
 const SERIE_B_TEAMS = [
-    { n: 'América-MG', c: '#006437', d: '#000000', fin: 9, spd: 8, stm: 9, pre: 9 },
-    { n: 'Athletic-MG', c: '#000000', d: '#ffffff', fin: 6, spd: 7, stm: 7, pre: 6 },
-    { n: 'Atlético-GO', c: '#c8102e', d: '#000000', fin: 8, spd: 9, stm: 8, pre: 8 },
-    { n: 'Avaí', c: '#0055a4', d: '#ffffff', fin: 7, spd: 7, stm: 8, pre: 7 },
-    { n: 'Botafogo-SP', c: '#e5053a', d: '#ffffff', fin: 6, spd: 6, stm: 7, pre: 6 },
-    { n: 'Ceará', c: '#000000', d: '#ffffff', fin: 10, spd: 9, stm: 9, pre: 10 },
-    { n: 'CRB', c: '#c8102e', d: '#ffffff', fin: 7, spd: 8, stm: 8, pre: 7 },
-    { n: 'Criciúma', c: '#ffcc00', d: '#000000', fin: 9, spd: 8, stm: 9, pre: 9 },
-    { n: 'Fortaleza', c: '#0033a0', d: '#c8102e', fin: 11, spd: 11, stm: 10, pre: 11 },
-    { n: 'Goiás', c: '#006437', d: '#ffffff', fin: 9, spd: 9, stm: 9, pre: 9 },
-    { n: 'Juventude', c: '#006437', d: '#ffffff', fin: 8, spd: 8, stm: 9, pre: 8 },
-    { n: 'Londrina', c: '#00a0e3', d: '#ffffff', fin: 5, spd: 6, stm: 6, pre: 5 },
-    { n: 'Náutico', c: '#e5053a', d: '#ffffff', fin: 7, spd: 6, stm: 7, pre: 6 },
-    { n: 'Novorizontino', c: '#ffcc00', d: '#000000', fin: 8, spd: 8, stm: 9, pre: 8 },
-    { n: 'Operário', c: '#000000', d: '#ffffff', fin: 7, spd: 7, stm: 8, pre: 7 },
-    { n: 'Ponte Preta', c: '#000000', d: '#ffffff', fin: 8, spd: 8, stm: 7, pre: 8 },
-    { n: 'São Bernardo', c: '#ffcc00', d: '#000000', fin: 6, spd: 7, stm: 7, pre: 6 },
-    { n: 'Sport', c: '#c8102e', d: '#000000', fin: 10, spd: 9, stm: 10, pre: 10 },
-    { n: 'Vila Nova', c: '#e5053a', d: '#ffffff', fin: 7, spd: 8, stm: 8, pre: 7 },
-    { n: 'Cuiabá', c: '#006437', d: '#ffcc00', fin: 9, spd: 9, stm: 9, pre: 9 }
+    { n: 'América-MG', c: '#006437', d: '#000000', fin: 9, spd: 8, stm: 9, pre: 9, state: 'MG' },
+    { n: 'Athletic-MG', c: '#000000', d: '#ffffff', fin: 6, spd: 7, stm: 7, pre: 6, state: 'MG' },
+    { n: 'Atlético-GO', c: '#c8102e', d: '#000000', fin: 8, spd: 9, stm: 8, pre: 8, state: 'GO' },
+    { n: 'Avaí', c: '#0055a4', d: '#ffffff', fin: 7, spd: 7, stm: 8, pre: 7, state: 'SC' },
+    { n: 'Botafogo-SP', c: '#e5053a', d: '#ffffff', fin: 6, spd: 6, stm: 7, pre: 6, state: 'SP' },
+    { n: 'Ceará', c: '#000000', d: '#ffffff', fin: 10, spd: 9, stm: 9, pre: 10, state: 'CE' },
+    { n: 'CRB', c: '#c8102e', d: '#ffffff', fin: 7, spd: 8, stm: 8, pre: 7, state: 'AL' },
+    { n: 'Criciúma', c: '#ffcc00', d: '#000000', fin: 9, spd: 8, stm: 9, pre: 9, state: 'SC' },
+    { n: 'Fortaleza', c: '#0033a0', d: '#c8102e', fin: 11, spd: 11, stm: 10, pre: 11, state: 'CE' },
+    { n: 'Goiás', c: '#006437', d: '#ffffff', fin: 9, spd: 9, stm: 9, pre: 9, state: 'GO' },
+    { n: 'Juventude', c: '#006437', d: '#ffffff', fin: 8, spd: 8, stm: 9, pre: 8, state: 'RS' },
+    { n: 'Londrina', c: '#00a0e3', d: '#ffffff', fin: 5, spd: 6, stm: 6, pre: 5, state: 'PR' },
+    { n: 'Náutico', c: '#e5053a', d: '#ffffff', fin: 7, spd: 6, stm: 7, pre: 6, state: 'PE' },
+    { n: 'Novorizontino', c: '#ffcc00', d: '#000000', fin: 8, spd: 8, stm: 9, pre: 8, state: 'SP' },
+    { n: 'Operário', c: '#000000', d: '#ffffff', fin: 7, spd: 7, stm: 8, pre: 7, state: 'PR' },
+    { n: 'Ponte Preta', c: '#000000', d: '#ffffff', fin: 8, spd: 8, stm: 7, pre: 8, state: 'SP' },
+    { n: 'São Bernardo', c: '#ffcc00', d: '#000000', fin: 6, spd: 7, stm: 7, pre: 6, state: 'SP' },
+    { n: 'Sport', c: '#c8102e', d: '#000000', fin: 10, spd: 9, stm: 10, pre: 10, state: 'PE' },
+    { n: 'Vila Nova', c: '#e5053a', d: '#ffffff', fin: 7, spd: 8, stm: 8, pre: 7, state: 'GO' },
+    { n: 'Cuiabá', c: '#006437', d: '#ffcc00', fin: 9, spd: 9, stm: 9, pre: 9, state: 'MT' }
 ];
 
 const SERIE_C_TEAMS = [
-    { n: 'Amazonas', c: '#ffcc00', d: '#000000', fin: 4, spd: 4, stm: 4, pre: 4 },
-    { n: 'Anápolis', c: '#000000', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2 },
-    { n: 'Barra-SC', c: '#00a0e3', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1 },
-    { n: 'Botafogo-PB', c: '#000000', d: '#ffffff', fin: 4, spd: 4, stm: 5, pre: 4 },
-    { n: 'Brusque', c: '#ffcc00', d: '#c8102e', fin: 4, spd: 5, stm: 4, pre: 4 },
-    { n: 'Caxias', c: '#8a1538', d: '#000000', fin: 3, spd: 4, stm: 4, pre: 3 },
-    { n: 'Confiança', c: '#0033a0', d: '#ffffff', fin: 3, spd: 3, stm: 4, pre: 3 },
-    { n: 'Ferroviária', c: '#8a1538', d: '#ffffff', fin: 4, spd: 4, stm: 4, pre: 4 },
-    { n: 'Figueirense', c: '#000000', d: '#ffffff', fin: 5, spd: 5, stm: 5, pre: 5 },
-    { n: 'Floresta', c: '#006437', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2 },
-    { n: 'Guarani', c: '#006437', d: '#ffffff', fin: 5, spd: 4, stm: 5, pre: 5 },
-    { n: 'Inter de Limeira', c: '#000000', d: '#ffffff', fin: 3, spd: 4, stm: 3, pre: 3 },
-    { n: 'Itabaiana', c: '#0033a0', d: '#c8102e', fin: 2, spd: 2, stm: 3, pre: 2 },
-    { n: 'Ituano', c: '#e5053a', d: '#000000', fin: 4, spd: 5, stm: 4, pre: 4 },
-    { n: 'Maranhão', c: '#0033a0', d: '#c8102e', fin: 2, spd: 3, stm: 2, pre: 2 },
-    { n: 'Maringá', c: '#000000', d: '#ffffff', fin: 3, spd: 4, stm: 4, pre: 3 },
-    { n: 'Paysandu', c: '#00a0e3', d: '#ffffff', fin: 5, spd: 5, stm: 5, pre: 5 },
-    { n: 'Santa Cruz', c: '#c8102e', d: '#000000', fin: 5, spd: 4, stm: 5, pre: 5 },
-    { n: 'Volta Redonda', c: '#ffcc00', d: '#000000', fin: 4, spd: 4, stm: 4, pre: 4 },
-    { n: 'Ypiranga-RS', c: '#ffcc00', d: '#006437', fin: 3, spd: 4, stm: 4, pre: 3 }
+    { n: 'Amazonas', c: '#ffcc00', d: '#000000', fin: 4, spd: 4, stm: 4, pre: 4, state: 'AM' },
+    { n: 'Anápolis', c: '#000000', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2, state: 'GO' },
+    { n: 'Barra-SC', c: '#00a0e3', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1, state: 'SC' },
+    { n: 'Botafogo-PB', c: '#000000', d: '#ffffff', fin: 4, spd: 4, stm: 5, pre: 4, state: 'PB' },
+    { n: 'Brusque', c: '#ffcc00', d: '#c8102e', fin: 4, spd: 5, stm: 4, pre: 4, state: 'SC' },
+    { n: 'Caxias', c: '#8a1538', d: '#000000', fin: 3, spd: 4, stm: 4, pre: 3, state: 'RS' },
+    { n: 'Confiança', c: '#0033a0', d: '#ffffff', fin: 3, spd: 3, stm: 4, pre: 3, state: 'SE' },
+    { n: 'Ferroviária', c: '#8a1538', d: '#ffffff', fin: 4, spd: 4, stm: 4, pre: 4, state: 'SP' },
+    { n: 'Figueirense', c: '#000000', d: '#ffffff', fin: 5, spd: 5, stm: 5, pre: 5, state: 'SC' },
+    { n: 'Floresta', c: '#006437', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2, state: 'CE' },
+    { n: 'Guarani', c: '#006437', d: '#ffffff', fin: 5, spd: 4, stm: 5, pre: 5, state: 'SP' },
+    { n: 'Inter de Limeira', c: '#000000', d: '#ffffff', fin: 3, spd: 4, stm: 3, pre: 3, state: 'SP' },
+    { n: 'Itabaiana', c: '#0033a0', d: '#c8102e', fin: 2, spd: 2, stm: 3, pre: 2, state: 'SE' },
+    { n: 'Ituano', c: '#e5053a', d: '#000000', fin: 4, spd: 5, stm: 4, pre: 4, state: 'SP' },
+    { n: 'Maranhão', c: '#0033a0', d: '#c8102e', fin: 2, spd: 3, stm: 2, pre: 2, state: 'MA' },
+    { n: 'Maringá', c: '#000000', d: '#ffffff', fin: 3, spd: 4, stm: 4, pre: 3, state: 'PR' },
+    { n: 'Paysandu', c: '#00a0e3', d: '#ffffff', fin: 5, spd: 5, stm: 5, pre: 5, state: 'PA' },
+    { n: 'Santa Cruz', c: '#c8102e', d: '#000000', fin: 5, spd: 4, stm: 5, pre: 5, state: 'PE' },
+    { n: 'Volta Redonda', c: '#ffcc00', d: '#000000', fin: 4, spd: 4, stm: 4, pre: 4, state: 'RJ' },
+    { n: 'Ypiranga-RS', c: '#ffcc00', d: '#006437', fin: 3, spd: 4, stm: 4, pre: 3, state: 'RS' }
 ];
 
 let teams = [];
@@ -308,7 +308,7 @@ function initLeagueMenu() {
     teams = [];
     SERIE_A_TEAMS.forEach((c, i) => {
         teams.push({
-            id: i, name: c.n, color: c.c, colorDark: c.d, league: 'A',
+            id: i, name: c.n, color: c.c, colorDark: c.d, league: 'A', state: c.state,
             fin: c.fin, spd: c.spd, stm: c.stm, pre: c.pre,
             pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
             titlesA: 0, titlesB: 0, titlesC: 0
@@ -316,7 +316,7 @@ function initLeagueMenu() {
     });
     SERIE_B_TEAMS.forEach((c, i) => {
         teams.push({
-            id: i + 20, name: c.n, color: c.c, colorDark: c.d, league: 'B',
+            id: i + 20, name: c.n, color: c.c, colorDark: c.d, league: 'B', state: c.state,
             fin: c.fin, spd: c.spd, stm: c.stm, pre: c.pre,
             pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
             titlesA: 0, titlesB: 0, titlesC: 0
@@ -325,7 +325,7 @@ function initLeagueMenu() {
 
     SERIE_C_TEAMS.forEach((c, i) => {
         teams.push({
-            id: i + 40, name: c.n, color: c.c, colorDark: c.d, league: 'C',
+            id: i + 40, name: c.n, color: c.c, colorDark: c.d, league: 'C', state: c.state,
             fin: c.fin, spd: c.spd, stm: c.stm, pre: c.pre,
             pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
             titlesA: 0, titlesB: 0, titlesC: 0
@@ -337,14 +337,13 @@ function initLeagueMenu() {
     scheduleC = generateRoundRobin(teams.filter(t => t.league === 'C'));
 
     const gridA = document.getElementById('team-grid-a');
-    const gridB = document.getElementById('team-grid-b');
-    const gridC = document.getElementById('team-grid-c');
-    gridA.innerHTML = ''; gridB.innerHTML = ''; gridC.innerHTML = '';
+    gridA.innerHTML = '';
     
-    teams.forEach(t => {
+    // Helper to render team card
+    const renderTeamCard = (t, container) => {
         const div = document.createElement('div');
-        div.className = 'team-card';
-        div.innerHTML = `<div class="team-card-color" style="background: ${t.color}"></div><span class="team-card-name">${t.name}</span>`;
+        div.className = 'team-card' + (myTeamId === t.id ? ' selected' : '');
+        div.innerHTML = `<div class="team-card-color" style="background: ${t.color}"></div><span class="team-card-name">${t.name}</span><span style="font-size:10px; color:#a1a1aa;">${t.state}</span>`;
         div.onclick = () => {
             document.querySelectorAll('.team-card').forEach(c => c.classList.remove('selected'));
             div.classList.add('selected');
@@ -358,9 +357,34 @@ function initLeagueMenu() {
             
             startLeagueBtn.classList.remove('hidden');
         };
-        if (t.league === 'A') gridA.appendChild(div);
-        else if (t.league === 'B') gridB.appendChild(div);
-        else gridC.appendChild(div);
+        container.appendChild(div);
+    };
+
+    teams.filter(t => t.league === 'A').forEach(t => renderTeamCard(t, gridA));
+
+    // Setup Search Bar
+    const searchInput = document.getElementById('team-search');
+    const searchResultsGrid = document.getElementById('search-results-grid');
+    
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.trim().toLowerCase();
+        searchResultsGrid.innerHTML = '';
+        
+        if (term.length > 0) {
+            searchResultsGrid.classList.remove('hidden');
+            let results = teams.filter(t => t.name.toLowerCase().includes(term) || t.state.toLowerCase() === term);
+            results.forEach(t => renderTeamCard(t, searchResultsGrid));
+            
+            if (results.length === 0) {
+                searchResultsGrid.innerHTML = '<div style="color: #a1a1aa; width: 100%; text-align: center; padding: 20px;">Nenhum time encontrado.</div>';
+            }
+        } else {
+            searchResultsGrid.classList.add('hidden');
+            // If they clear the search, and had a selected team from B or C, we should probably keep it selected in memory
+            // Re-render A grid just to reflect selection if it was an A team
+            gridA.innerHTML = '';
+            teams.filter(t => t.league === 'A').forEach(t => renderTeamCard(t, gridA));
+        }
     });
 
     loadSavedData();
@@ -384,34 +408,19 @@ btnCancelCustomTeam.onclick = () => {
 btnSaveCustomTeam.onclick = () => {
     const tName = customTeamName.value.trim() || 'Custom FC';
     const tColor = customTeamColor.value;
+    const tState = document.getElementById('custom-team-state').value;
     const tReplaceId = parseInt(customTeamReplace.value);
     
     let t = teams.find(x => x.id === tReplaceId);
     if (t) {
         t.name = tName;
         t.color = tColor;
+        t.state = tState;
         t.fin = 0; t.spd = 0; t.stm = 0; t.pre = 0;
         t.titlesA = 0; t.titlesB = 0; t.titlesC = 0;
         
-        const gridC = document.getElementById('team-grid-c');
-        gridC.innerHTML = '';
-        teams.filter(team => team.league === 'C').forEach(team => {
-            const div = document.createElement('div');
-            div.className = 'team-card' + (team.id === tReplaceId ? ' selected' : '');
-            div.innerHTML = `<div class="team-card-color" style="background: ${team.color}"></div><span class="team-card-name">${team.name}</span>`;
-            div.onclick = () => {
-                document.querySelectorAll('.team-card').forEach(c => c.classList.remove('selected'));
-                div.classList.add('selected');
-                myTeamId = team.id;
-                
-                currentLeagueTab = team.league;
-                document.getElementById('tab-serie-a').style.opacity = currentLeagueTab === 'A' ? '1' : '0.5';
-                document.getElementById('tab-serie-b').style.opacity = currentLeagueTab === 'B' ? '1' : '0.5';
-                document.getElementById('tab-serie-c').style.opacity = currentLeagueTab === 'C' ? '1' : '0.5';
-                startLeagueBtn.classList.remove('hidden');
-            };
-            gridC.appendChild(div);
-        });
+        // Triggers the search logic to refresh the grid if it was open
+        document.getElementById('team-search').dispatchEvent(new Event('input'));
         
         myTeamId = tReplaceId;
         currentLeagueTab = 'C';
