@@ -104,7 +104,7 @@ const SERIE_A_TEAMS = [
     { n: 'Athletico-PR', c: '#c8102e', d: '#000000', fin: 14, spd: 14, stm: 15, pre: 15, state: 'PR' },
     { n: 'Atlético-MG', c: '#000000', d: '#111111', fin: 16, spd: 15, stm: 16, pre: 16, state: 'MG' },
     { n: 'Bahia', c: '#0033a0', d: '#c8102e', fin: 15, spd: 14, stm: 14, pre: 15, state: 'BA' },
-    { n: 'Botafogo', c: '#000000', d: '#111111', fin: 19, spd: 18, stm: 18, pre: 18, state: 'RJ' },
+    { n: 'Botafogo', c: '#000000', d: '#111111', fin: 15, spd: 14, stm: 16, pre: 12, state: 'RJ' },
     { n: 'Chapecoense', c: '#006437', d: '#ffffff', fin: 8, spd: 9, stm: 10, pre: 8, state: 'SC' },
     { n: 'Corinthians', c: '#ffffff', d: '#000000', fin: 14, spd: 13, stm: 15, pre: 15, state: 'SP' },
     { n: 'Coritiba', c: '#005f33', d: '#ffffff', fin: 9, spd: 10, stm: 10, pre: 9, state: 'PR' },
@@ -513,11 +513,11 @@ let previousOverlayBox = null;
 
 function getAttributeCost(val) {
     if (val < 15) {
-        // Base 100k to 1M at level 15 (100000 * 1.165914^15 = 1000000)
-        return 100000 * Math.pow(1.165914, val);
+        // Base 100k to 1M at level 15
+        return 100000 * Math.pow(1.212, val);
     } else {
-        // From level 15 upwards, scales much harder (30% per level)
-        return 1000000 * Math.pow(1.3, val - 15);
+        // From level 15 upwards, scales much harder
+        return 1000000 * Math.pow(1.415, val - 15);
     }
 }
 
