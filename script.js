@@ -893,14 +893,14 @@ let previousOverlayBox = null;
 
 function getAttributeCost(val) {
     if (val < 10) {
-        // Níveis 1 a 10: 100k a 5M
-        return 100000 * Math.pow(50, val / 9);
+        // Níveis 1 a 10: 100k a 1M
+        return 100000 * Math.pow(10, val / 9);
     } else if (val < 20) {
-        // Níveis 11 a 20: 5M a 15M
-        return 5000000 * Math.pow(3, (val - 10) / 9);
+        // Níveis 11 a 20: 1M a 5M
+        return 1000000 * Math.pow(5, (val - 10) / 9);
     } else {
-        // Níveis 21 a 25: 15M a 30M
-        return 15000000 * Math.pow(2, (val - 20) / 4);
+        // Níveis 21 a 25: 5M a 30M
+        return 5000000 * Math.pow(6, (val - 20) / 4);
     }
 }
 
