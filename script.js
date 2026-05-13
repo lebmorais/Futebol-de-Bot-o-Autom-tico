@@ -178,16 +178,139 @@ const SERIE_C_TEAMS = [
     { n: 'Ypiranga-RS', c: '#ffcc00', d: '#006437', fin: 3, spd: 4, stm: 4, pre: 3, state: 'RS' }
 ];
 
+// Estadual-only teams (don't play Brasileirão)
+const ESTADUAL_TEAMS = [
+    // RJ (need 3 more -> 8 total with 5 existing)
+    { n: 'Bangu', c: '#c8102e', d: '#ffffff', fin: 2, spd: 2, stm: 3, pre: 2, state: 'RJ' },
+    { n: 'Madureira', c: '#ffcc00', d: '#006437', fin: 2, spd: 3, stm: 3, pre: 2, state: 'RJ' },
+    { n: 'Nova Iguaçu', c: '#ff6600', d: '#000000', fin: 3, spd: 3, stm: 3, pre: 3, state: 'RJ' },
+    // MG (need 4 more -> 8)
+    { n: 'Tombense', c: '#c8102e', d: '#ffffff', fin: 3, spd: 3, stm: 4, pre: 3, state: 'MG' },
+    { n: 'Uberlândia', c: '#006437', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'MG' },
+    { n: 'Pouso Alegre', c: '#0033a0', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'MG' },
+    { n: 'Villa Nova-MG', c: '#c8102e', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2, state: 'MG' },
+    // RS (need 3 more -> 8)
+    { n: 'São José-RS', c: '#e5053a', d: '#ffffff', fin: 2, spd: 2, stm: 3, pre: 2, state: 'RS' },
+    { n: 'Brasil-Pel', c: '#c8102e', d: '#000000', fin: 3, spd: 3, stm: 3, pre: 3, state: 'RS' },
+    { n: 'Pelotas', c: '#000000', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'RS' },
+    // PR (need 3 more -> 8)
+    { n: 'Cascavel', c: '#0033a0', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'PR' },
+    { n: 'Cianorte', c: '#0055a4', d: '#ffffff', fin: 2, spd: 2, stm: 3, pre: 2, state: 'PR' },
+    { n: 'Paraná Clube', c: '#0033a0', d: '#c8102e', fin: 3, spd: 3, stm: 3, pre: 3, state: 'PR' },
+    // SC (need 2 more -> 8)
+    { n: 'Joinville', c: '#c8102e', d: '#000000', fin: 3, spd: 3, stm: 4, pre: 3, state: 'SC' },
+    { n: 'Hercílio Luz', c: '#0055a4', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'SC' },
+    // BA (need 6 more -> 8)
+    { n: 'Atlético-BA', c: '#0033a0', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'BA' },
+    { n: 'Barcelona-BA', c: '#ffcc00', d: '#c8102e', fin: 1, spd: 2, stm: 2, pre: 1, state: 'BA' },
+    { n: 'Jacuipense', c: '#e5053a', d: '#000000', fin: 2, spd: 2, stm: 2, pre: 2, state: 'BA' },
+    { n: 'Juazeirense', c: '#c8102e', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2, state: 'BA' },
+    { n: 'Jacobina', c: '#006437', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1, state: 'BA' },
+    { n: 'Jequié', c: '#c8102e', d: '#000000', fin: 1, spd: 1, stm: 2, pre: 1, state: 'BA' },
+    // PE (need 5 more -> 8)
+    { n: 'Retrô', c: '#ffcc00', d: '#000000', fin: 3, spd: 3, stm: 3, pre: 3, state: 'PE' },
+    { n: 'Afogados', c: '#c8102e', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'PE' },
+    { n: 'Central', c: '#000000', d: '#ffffff', fin: 2, spd: 2, stm: 3, pre: 2, state: 'PE' },
+    { n: 'Petrolina', c: '#0033a0', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1, state: 'PE' },
+    { n: 'Maguary', c: '#006437', d: '#ffffff', fin: 1, spd: 1, stm: 2, pre: 1, state: 'PE' },
+    // CE (need 5 more -> 8)
+    { n: 'Ferroviário-CE', c: '#c8102e', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'CE' },
+    { n: 'Horizonte', c: '#006437', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'CE' },
+    { n: 'Iguatu', c: '#0033a0', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'CE' },
+    { n: 'Barbalha', c: '#c8102e', d: '#000000', fin: 1, spd: 1, stm: 2, pre: 1, state: 'CE' },
+    { n: 'Tirol', c: '#ffffff', d: '#0033a0', fin: 1, spd: 2, stm: 2, pre: 1, state: 'CE' },
+    // GO (need 4 more -> 8)
+    { n: 'Aparecidense', c: '#000000', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'GO' },
+    { n: 'Goianésia', c: '#006437', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'GO' },
+    { n: 'Goiânia', c: '#006437', d: '#ffffff', fin: 2, spd: 2, stm: 3, pre: 2, state: 'GO' },
+    { n: 'Goiatuba', c: '#e5053a', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1, state: 'GO' },
+    // PA (need 6 more -> 8)
+    { n: 'Tuna Luso', c: '#0033a0', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'PA' },
+    { n: 'Castanhal', c: '#ffcc00', d: '#006437', fin: 2, spd: 3, stm: 3, pre: 2, state: 'PA' },
+    { n: 'Cametá', c: '#006437', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'PA' },
+    { n: 'Águia', c: '#0033a0', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'PA' },
+    { n: 'Independente-PA', c: '#ffcc00', d: '#c8102e', fin: 1, spd: 2, stm: 2, pre: 1, state: 'PA' },
+    { n: 'Bragantino-PA', c: '#ffffff', d: '#000000', fin: 1, spd: 2, stm: 2, pre: 1, state: 'PA' },
+    // AL (need 7 more -> 8)
+    { n: 'CSA', c: '#0033a0', d: '#ffffff', fin: 4, spd: 4, stm: 4, pre: 4, state: 'AL' },
+    { n: 'ASA', c: '#000000', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'AL' },
+    { n: 'Murici', c: '#006437', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'AL' },
+    { n: 'Coruripe', c: '#e5053a', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'AL' },
+    { n: 'CSE', c: '#0033a0', d: '#c8102e', fin: 1, spd: 2, stm: 2, pre: 1, state: 'AL' },
+    { n: 'Penedense', c: '#c8102e', d: '#ffffff', fin: 1, spd: 1, stm: 2, pre: 1, state: 'AL' },
+    { n: 'Igaci', c: '#006437', d: '#000000', fin: 1, spd: 1, stm: 1, pre: 1, state: 'AL' },
+    // MT (need 7 more -> 8)
+    { n: 'Luverdense', c: '#006437', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'MT' },
+    { n: 'Nova Mutum', c: '#0033a0', d: '#ffffff', fin: 2, spd: 2, stm: 3, pre: 2, state: 'MT' },
+    { n: 'Operário-VG', c: '#000000', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'MT' },
+    { n: 'Mixto', c: '#ffcc00', d: '#000000', fin: 2, spd: 2, stm: 2, pre: 2, state: 'MT' },
+    { n: 'Sport Sinop', c: '#c8102e', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1, state: 'MT' },
+    { n: 'Primavera-MT', c: '#006437', d: '#ffffff', fin: 1, spd: 1, stm: 2, pre: 1, state: 'MT' },
+    { n: 'União-MT', c: '#0033a0', d: '#ffffff', fin: 1, spd: 1, stm: 1, pre: 1, state: 'MT' },
+    // PB (need 7 more -> 8)
+    { n: 'Campinense', c: '#c8102e', d: '#ffffff', fin: 3, spd: 3, stm: 4, pre: 3, state: 'PB' },
+    { n: 'Treze', c: '#000000', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'PB' },
+    { n: 'Sousa', c: '#ffcc00', d: '#000000', fin: 2, spd: 2, stm: 2, pre: 2, state: 'PB' },
+    { n: 'Auto Esporte-PB', c: '#c8102e', d: '#000000', fin: 1, spd: 2, stm: 2, pre: 1, state: 'PB' },
+    { n: 'Nacional-PB', c: '#0033a0', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1, state: 'PB' },
+    { n: 'CSP', c: '#ffffff', d: '#0033a0', fin: 2, spd: 2, stm: 2, pre: 2, state: 'PB' },
+    { n: 'Esporte-PB', c: '#e5053a', d: '#ffffff', fin: 1, spd: 1, stm: 2, pre: 1, state: 'PB' },
+    // SE (need 6 more -> 8)
+    { n: 'Lagarto-SE', c: '#006437', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2, state: 'SE' },
+    { n: 'Sergipe', c: '#c8102e', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'SE' },
+    { n: 'Falcon', c: '#0033a0', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'SE' },
+    { n: 'Carmópolis', c: '#ffcc00', d: '#000000', fin: 1, spd: 2, stm: 2, pre: 1, state: 'SE' },
+    { n: 'América-SE', c: '#c8102e', d: '#000000', fin: 1, spd: 1, stm: 2, pre: 1, state: 'SE' },
+    { n: 'Barra-SE', c: '#0033a0', d: '#ffffff', fin: 1, spd: 1, stm: 1, pre: 1, state: 'SE' },
+    // MA (need 7 more -> 8)
+    { n: 'Sampaio Corrêa', c: '#006437', d: '#ffcc00', fin: 4, spd: 4, stm: 4, pre: 4, state: 'MA' },
+    { n: 'Moto Club', c: '#c8102e', d: '#000000', fin: 3, spd: 3, stm: 3, pre: 3, state: 'MA' },
+    { n: 'Imperatriz', c: '#006437', d: '#ffffff', fin: 2, spd: 3, stm: 3, pre: 2, state: 'MA' },
+    { n: 'Pinheiro', c: '#0033a0', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'MA' },
+    { n: 'IAPE', c: '#000000', d: '#ffcc00', fin: 2, spd: 2, stm: 2, pre: 2, state: 'MA' },
+    { n: 'Tuntum', c: '#006437', d: '#ffffff', fin: 1, spd: 1, stm: 2, pre: 1, state: 'MA' },
+    { n: 'Real Codó', c: '#c8102e', d: '#ffffff', fin: 1, spd: 1, stm: 1, pre: 1, state: 'MA' },
+    // AM (need 7 more -> 8)
+    { n: 'Manaus FC', c: '#006437', d: '#ffcc00', fin: 4, spd: 4, stm: 4, pre: 4, state: 'AM' },
+    { n: 'Nacional-AM', c: '#0033a0', d: '#ffffff', fin: 3, spd: 3, stm: 3, pre: 3, state: 'AM' },
+    { n: 'Fast Clube', c: '#ffcc00', d: '#c8102e', fin: 2, spd: 3, stm: 3, pre: 2, state: 'AM' },
+    { n: 'Manauara', c: '#0033a0', d: '#000000', fin: 2, spd: 2, stm: 2, pre: 2, state: 'AM' },
+    { n: 'Princesa', c: '#006437', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'AM' },
+    { n: 'Parintins', c: '#e5053a', d: '#ffffff', fin: 1, spd: 2, stm: 2, pre: 1, state: 'AM' },
+    { n: 'São Raimundo-AM', c: '#006437', d: '#000000', fin: 1, spd: 1, stm: 1, pre: 1, state: 'AM' },
+    // SP extra (need 2 more -> SP already has 14 but we need to ensure 8 per estadual; these complete 16 for selection)
+    { n: 'Água Santa', c: '#ffffff', d: '#0033a0', fin: 3, spd: 3, stm: 3, pre: 3, state: 'SP' },
+    { n: 'Velo Clube', c: '#c8102e', d: '#ffffff', fin: 2, spd: 2, stm: 2, pre: 2, state: 'SP' },
+];
+
+const STATE_NAMES = {
+    SP: 'Paulistão', RJ: 'Carioca', MG: 'Mineiro', RS: 'Gaúcho',
+    PR: 'Paranaense', SC: 'Catarinense', BA: 'Baiano', PE: 'Pernambucano',
+    CE: 'Cearense', GO: 'Goiano', PA: 'Paraense', AL: 'Alagoano',
+    MT: 'Mato-Grossense', PB: 'Paraibano', SE: 'Sergipano', MA: 'Maranhense',
+    AM: 'Amazonense'
+};
+
+const ALL_STATES = Object.keys(STATE_NAMES);
+
 let teams = [];
 let scheduleA = [];
 let scheduleB = [];
+let scheduleC = [];
 let currentSeason = 1;
-let currentLeagueTab = 'A'; // 'A' or 'B'
+let currentLeagueTab = 'A';
 let myTeamId = -1;
 let currentRound = 0;
-let liveMatches = []; 
+let liveMatches = [];
 let currentCanvasMatch = null;
 let teamAConfig, teamBConfig;
+
+// --- New Competition State ---
+let calendar = [];
+let currentWeek = 0;
+let currentBrasRound = 0;
+let estadualData = {};
+let copaBrasil = null;
 
 let myFormation = { def: 4, mid: 4, att: 2 };
 let myAttitude = 'defensive';
@@ -281,7 +404,11 @@ function formatCurrency(val) {
 
 function saveGame() {
     const data = {
-        teams, scheduleA, scheduleB, scheduleC, currentRound, myTeamId, currentSeason,
+        version: 2,
+        teams, scheduleA, scheduleB, scheduleC,
+        calendar, currentWeek, currentBrasRound, currentRound,
+        estadualData, copaBrasil,
+        myTeamId, currentSeason,
         myFormation, myAttitude, myFunds, availablePoints, myMatchHistory
     };
     localStorage.setItem('botao_league_save', JSON.stringify(data));
@@ -313,6 +440,237 @@ function generateRoundRobin(leagueTeams) {
     return sch.concat(secondHalf);
 }
 
+function generateSingleRoundRobin(teamIds) {
+    let sch = [];
+    let n = teamIds.length;
+    let rounds = n - 1;
+    let ids = [...teamIds];
+    let first = ids.shift();
+    for (let r = 0; r < rounds; r++) {
+        let roundMatches = [];
+        let t1 = ids[r % rounds];
+        if (r % 2 === 0) roundMatches.push({ a: first, b: t1, scoreA: 0, scoreB: 0, finished: false });
+        else roundMatches.push({ a: t1, b: first, scoreA: 0, scoreB: 0, finished: false });
+        for (let i = 1; i < n / 2; i++) {
+            let pA = ids[(r + i) % rounds];
+            let pB = ids[(r + rounds - i) % rounds];
+            roundMatches.push({ a: pA, b: pB, scoreA: 0, scoreB: 0, finished: false });
+        }
+        sch.push(roundMatches);
+    }
+    return sch;
+}
+
+// --- Estadual Generation ---
+function generateEstadual(stateCode) {
+    let stateTeams = teams.filter(t => t.state === stateCode);
+    // Sort by overall descending, pick top 8
+    stateTeams.sort((a, b) => (b.fin + b.spd + b.stm + b.pre) - (a.fin + a.spd + a.stm + a.pre));
+    stateTeams = stateTeams.slice(0, 8);
+    // Shuffle
+    for (let i = stateTeams.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1)); [stateTeams[i], stateTeams[j]] = [stateTeams[j], stateTeams[i]]; }
+    
+    let groupA = stateTeams.slice(0, 4).map(t => t.id);
+    let groupB = stateTeams.slice(4, 8).map(t => t.id);
+    
+    let scheduleGA = generateSingleRoundRobin(groupA); // 3 rounds
+    let scheduleGB = generateSingleRoundRobin(groupB); // 3 rounds
+    
+    // Merge schedules: each round has matches from both groups
+    let schedule = [];
+    for (let r = 0; r < 3; r++) {
+        schedule.push([...scheduleGA[r], ...scheduleGB[r]]);
+    }
+    
+    return {
+        teams: stateTeams.map(t => t.id),
+        groups: { A: groupA, B: groupB },
+        schedule: schedule,
+        final: null, // { a, b, scoreA, scoreB, finished }
+        champion: null,
+        standings: {}
+    };
+}
+
+function getEstadualGroupStandings(groupIds, schedule) {
+    let st = {};
+    groupIds.forEach(id => { st[id] = { pts: 0, gd: 0, gf: 0 }; });
+    schedule.forEach(round => {
+        round.forEach(m => {
+            if (!m.finished) return;
+            if (!groupIds.includes(m.a)) return;
+            st[m.a].gf += m.scoreA; st[m.a].gd += m.scoreA - m.scoreB;
+            st[m.b].gf += m.scoreB; st[m.b].gd += m.scoreB - m.scoreA;
+            if (m.scoreA > m.scoreB) { st[m.a].pts += 3; }
+            else if (m.scoreB > m.scoreA) { st[m.b].pts += 3; }
+            else { st[m.a].pts += 1; st[m.b].pts += 1; }
+        });
+    });
+    let sorted = groupIds.slice().sort((a, b) => {
+        if (st[b].pts !== st[a].pts) return st[b].pts - st[a].pts;
+        if (st[b].gd !== st[a].gd) return st[b].gd - st[a].gd;
+        return st[b].gf - st[a].gf;
+    });
+    return sorted;
+}
+
+// --- Copa do Brasil Generation ---
+function generateCopaBrasil() {
+    // 20 Série A teams + up to 12 estadual champions
+    let qualified = teams.filter(t => t.league === 'A').map(t => t.id);
+    
+    // Add estadual champions (non-Série-A only)
+    ALL_STATES.forEach(st => {
+        if (estadualData[st] && estadualData[st].champion != null) {
+            let champId = estadualData[st].champion;
+            if (!qualified.includes(champId)) {
+                qualified.push(champId);
+            }
+        }
+    });
+    
+    // If less than 32, add top Série B teams
+    if (qualified.length < 32) {
+        let serieB = teams.filter(t => t.league === 'B' && !qualified.includes(t.id))
+            .sort((a, b) => (b.fin + b.spd + b.stm + b.pre) - (a.fin + a.spd + a.stm + a.pre));
+        for (let i = 0; i < serieB.length && qualified.length < 32; i++) {
+            qualified.push(serieB[i].id);
+        }
+    }
+    
+    // If still less than 32, add Série C teams
+    if (qualified.length < 32) {
+        let serieC = teams.filter(t => t.league === 'C' && !qualified.includes(t.id))
+            .sort((a, b) => (b.fin + b.spd + b.stm + b.pre) - (a.fin + a.spd + a.stm + a.pre));
+        for (let i = 0; i < serieC.length && qualified.length < 32; i++) {
+            qualified.push(serieC[i].id);
+        }
+    }
+    
+    // Shuffle qualified
+    for (let i = qualified.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1)); [qualified[i], qualified[j]] = [qualified[j], qualified[i]]; }
+    
+    // Build first phase matchups (ida + volta)
+    let phase0 = [];
+    for (let i = 0; i < qualified.length; i += 2) {
+        phase0.push({
+            team1: qualified[i], team2: qualified[i + 1],
+            leg1: { a: qualified[i], b: qualified[i + 1], scoreA: 0, scoreB: 0, finished: false },
+            leg2: { a: qualified[i + 1], b: qualified[i], scoreA: 0, scoreB: 0, finished: false },
+            winner: null
+        });
+    }
+    
+    copaBrasil = {
+        qualified: qualified,
+        phases: [phase0],
+        currentPhase: 0,
+        champion: null
+    };
+}
+
+function advanceCopaPhase() {
+    let phase = copaBrasil.phases[copaBrasil.currentPhase];
+    let winners = [];
+    phase.forEach(matchup => {
+        let agg1 = matchup.leg1.scoreA + matchup.leg2.scoreB;
+        let agg2 = matchup.leg1.scoreB + matchup.leg2.scoreA;
+        if (agg1 > agg2) matchup.winner = matchup.team1;
+        else if (agg2 > agg1) matchup.winner = matchup.team2;
+        else {
+            // Away goals
+            let away1 = matchup.leg2.scoreB; // team1 away goals
+            let away2 = matchup.leg1.scoreB; // team2 away goals
+            if (away1 > away2) matchup.winner = matchup.team1;
+            else if (away2 > away1) matchup.winner = matchup.team2;
+            else matchup.winner = Math.random() < 0.5 ? matchup.team1 : matchup.team2; // Pênaltis
+        }
+        winners.push(matchup.winner);
+    });
+    
+    if (winners.length === 1) {
+        copaBrasil.champion = winners[0];
+        if (!copaBrasil.titleAwarded) {
+            let champTeam = teams.find(t => t.id === winners[0]);
+            if (champTeam) {
+                champTeam.titlesCopa = (champTeam.titlesCopa || 0) + 1;
+            }
+            copaBrasil.titleAwarded = true;
+        }
+        return;
+    }
+    
+    // Build next phase
+    let nextPhase = [];
+    for (let i = 0; i < winners.length; i += 2) {
+        nextPhase.push({
+            team1: winners[i], team2: winners[i + 1],
+            leg1: { a: winners[i], b: winners[i + 1], scoreA: 0, scoreB: 0, finished: false },
+            leg2: { a: winners[i + 1], b: winners[i], scoreA: 0, scoreB: 0, finished: false },
+            winner: null
+        });
+    }
+    copaBrasil.phases.push(nextPhase);
+    copaBrasil.currentPhase++;
+}
+
+// --- Calendar Builder ---
+function buildCalendar() {
+    calendar = [];
+    let week = 0;
+    
+    // Weeks 0-2: Estadual group stage (3 rounds)
+    for (let r = 0; r < 3; r++) {
+        calendar.push({ week: week++, type: 'estadual_group', estadualRound: r });
+    }
+    // Week 3: Estadual final
+    calendar.push({ week: week++, type: 'estadual_final' });
+    
+    // Brasileirão + Copa do Brasil interleaved
+    // Copa phases at specific intervals (ida + volta pairs)
+    // 5 phases - 2 legs = 10 copa weeks + 38 brasileirão weeks = 48 weeks
+    let brasRound = 0;
+    let copaPhase = 0;
+    // Pattern: 5 bras, then [copa ida, copa volta, 6 bras] - 4, then copa ida, copa volta, 8 bras
+    let copaInsertAfterBras = [5, 11, 17, 23, 29]; // After these many brasileirão rounds, insert copa
+    
+    while (brasRound < 38 || copaPhase < 5) {
+        if (copaPhase < 5 && copaInsertAfterBras.includes(brasRound)) {
+            calendar.push({ week: week++, type: 'copa_br', copaPhase: copaPhase, copaLeg: 'ida' });
+            calendar.push({ week: week++, type: 'copa_br', copaPhase: copaPhase, copaLeg: 'volta' });
+            copaPhase++;
+        } else if (brasRound < 38) {
+            calendar.push({ week: week++, type: 'brasileirao', brasRound: brasRound });
+            brasRound++;
+        }
+    }
+}
+
+function buildSeason() {
+    // Generate estaduais for all states
+    estadualData = {};
+    ALL_STATES.forEach(st => {
+        let stateTeamCount = teams.filter(t => t.state === st).length;
+        if (stateTeamCount >= 4) {
+            estadualData[st] = generateEstadual(st);
+        }
+    });
+    
+    // Brasileirão schedules
+    scheduleA = generateRoundRobin(teams.filter(t => t.league === 'A'));
+    scheduleB = generateRoundRobin(teams.filter(t => t.league === 'B'));
+    scheduleC = generateRoundRobin(teams.filter(t => t.league === 'C'));
+    
+    // Copa do Brasil will be generated after estaduais finish (week 4)
+    copaBrasil = null;
+    
+    // Build the calendar
+    buildCalendar();
+    currentWeek = 0;
+    currentBrasRound = 0;
+    currentRound = 0;
+}
+
 function initLeagueMenu() {
     teams = [];
     SERIE_A_TEAMS.forEach((c, i) => {
@@ -320,7 +678,7 @@ function initLeagueMenu() {
             id: i, name: c.n, color: c.c, colorDark: c.d, league: 'A', state: c.state,
             fin: c.fin, spd: c.spd, stm: c.stm, pre: c.pre,
             pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
-            titlesA: 0, titlesB: 0, titlesC: 0
+            titlesA: 0, titlesB: 0, titlesC: 0, estadualTitles: 0, titlesCopa: 0
         });
     });
     SERIE_B_TEAMS.forEach((c, i) => {
@@ -328,7 +686,7 @@ function initLeagueMenu() {
             id: i + 20, name: c.n, color: c.c, colorDark: c.d, league: 'B', state: c.state,
             fin: c.fin, spd: c.spd, stm: c.stm, pre: c.pre,
             pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
-            titlesA: 0, titlesB: 0, titlesC: 0
+            titlesA: 0, titlesB: 0, titlesC: 0, estadualTitles: 0, titlesCopa: 0
         });
     });
 
@@ -337,13 +695,20 @@ function initLeagueMenu() {
             id: i + 40, name: c.n, color: c.c, colorDark: c.d, league: 'C', state: c.state,
             fin: c.fin, spd: c.spd, stm: c.stm, pre: c.pre,
             pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
-            titlesA: 0, titlesB: 0, titlesC: 0
+            titlesA: 0, titlesB: 0, titlesC: 0, estadualTitles: 0, titlesCopa: 0
         });
     });
 
-    scheduleA = generateRoundRobin(teams.filter(t => t.league === 'A'));
-    scheduleB = generateRoundRobin(teams.filter(t => t.league === 'B'));
-    scheduleC = generateRoundRobin(teams.filter(t => t.league === 'C'));
+    // Estadual-only teams
+    ESTADUAL_TEAMS.forEach((c, i) => {
+        teams.push({
+            id: i + 100, name: c.n, color: c.c, colorDark: c.d, league: null, state: c.state,
+            estadualOnly: true,
+            fin: c.fin, spd: c.spd, stm: c.stm, pre: c.pre,
+            pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
+            titlesA: 0, titlesB: 0, titlesC: 0, estadualTitles: 0, titlesCopa: 0
+        });
+    });
 
     const gridA = document.getElementById('team-grid-a');
     gridA.innerHTML = '';
@@ -381,7 +746,7 @@ function initLeagueMenu() {
         
         if (term.length > 0) {
             searchResultsGrid.classList.remove('hidden');
-            let results = teams.filter(t => t.name.toLowerCase().includes(term) || t.state.toLowerCase() === term);
+            let results = teams.filter(t => !t.estadualOnly && (t.name.toLowerCase().includes(term) || t.state.toLowerCase() === term));
             results.forEach(t => renderTeamCard(t, searchResultsGrid));
             
             if (results.length === 0) {
@@ -426,7 +791,7 @@ btnSaveCustomTeam.onclick = () => {
         t.color = tColor;
         t.state = tState;
         t.fin = 0; t.spd = 0; t.stm = 0; t.pre = 0;
-        t.titlesA = 0; t.titlesB = 0; t.titlesC = 0;
+        t.titlesA = 0; t.titlesB = 0; t.titlesC = 0; t.estadualTitles = 0; t.titlesCopa = 0;
         
         // Triggers the search logic to refresh the grid if it was open
         document.getElementById('team-search').dispatchEvent(new Event('input'));
@@ -443,7 +808,7 @@ btnSaveCustomTeam.onclick = () => {
 };
 
 startLeagueBtn.onclick = () => {
-    localStorage.removeItem('botao_league_save'); // start fresh
+    localStorage.removeItem('botao_league_save');
     myFunds = 0;
     availablePoints = 0;
     myMatchHistory = [];
@@ -451,53 +816,38 @@ startLeagueBtn.onclick = () => {
     
     mainMenu.classList.add('hidden');
     leagueView.classList.remove('hidden');
-    currentRound = 0;
-    saveGame(); // Save initial state so custom team is persisted instantly
-    prepareRound();
+    buildSeason();
+    saveGame();
+    prepareWeek();
 };
 
 continueLeagueBtn.onclick = () => {
     const saved = JSON.parse(localStorage.getItem('botao_league_save'));
+    if (!saved.version || saved.version < 2) {
+        alert('Save incompatível com a nova versão. Inicie um novo campeonato.');
+        return;
+    }
     teams = saved.teams;
-    teams.forEach(t => {
-        if (!t.league) t.league = 'A'; // Backward compatibility
-        if (t.fin === undefined) {
-            let base = SERIE_A_TEAMS.find(b => b.n === t.name) || SERIE_B_TEAMS.find(b => b.n === t.name) || SERIE_C_TEAMS.find(b => b.n === t.name);
-            t.fin = base ? base.fin : 15;
-            t.spd = base ? base.spd : 15;
-            t.stm = base ? base.stm : 15;
-            t.pre = base ? base.pre : 15;
-        }
-        if (t.pre === undefined) {
-            let base = SERIE_A_TEAMS.find(b => b.n === t.name) || SERIE_B_TEAMS.find(b => b.n === t.name) || SERIE_C_TEAMS.find(b => b.n === t.name);
-            t.pre = base ? base.pre : 15;
-        }
-        if (t.titlesA === undefined) {
-            t.titlesA = 0; t.titlesB = 0; t.titlesC = 0;
-        }
-    });
-    scheduleA = saved.scheduleA || saved.schedule; // Backward compatibility
-    scheduleB = saved.scheduleB || generateRoundRobin(teams.filter(t => t.league === 'B'));
-    scheduleC = saved.scheduleC || generateRoundRobin(teams.filter(t => t.league === 'C'));
-    
-    currentRound = saved.currentRound;
+    scheduleA = saved.scheduleA;
+    scheduleB = saved.scheduleB;
+    scheduleC = saved.scheduleC;
+    calendar = saved.calendar || [];
+    currentWeek = saved.currentWeek || 0;
+    currentBrasRound = saved.currentBrasRound || 0;
+    currentRound = saved.currentRound || 0;
+    estadualData = saved.estadualData || {};
+    copaBrasil = saved.copaBrasil || null;
     myTeamId = saved.myTeamId;
     currentSeason = saved.currentSeason || 1;
     if (saved.myFormation) myFormation = saved.myFormation;
     if (saved.myAttitude) myAttitude = saved.myAttitude;
-    
     myFunds = saved.myFunds || 0;
     availablePoints = saved.availablePoints || 0;
-    if (availablePoints > 0) {
-        myFunds += availablePoints * 100000 * Math.pow(1.09, 15);
-        availablePoints = 0;
-    }
     myMatchHistory = saved.myMatchHistory || [];
-    
     myFundsText.innerText = formatCurrency(myFunds);
     
     let myTeam = teams.find(t => t.id === myTeamId);
-    if (myTeam) {
+    if (myTeam && myTeam.league) {
         currentLeagueTab = myTeam.league;
         document.getElementById('tab-serie-a').style.opacity = currentLeagueTab === 'A' ? '1' : '0.5';
         document.getElementById('tab-serie-b').style.opacity = currentLeagueTab === 'B' ? '1' : '0.5';
@@ -506,14 +856,7 @@ continueLeagueBtn.onclick = () => {
     
     mainMenu.classList.add('hidden');
     leagueView.classList.remove('hidden');
-    
-    if (currentRound >= 38) {
-        // Fix for saves that got stuck on round 38
-        renderStandings(); // Make sure standings are sorted before handling
-        handleSeasonEnd();
-    } else {
-        prepareRound();
-    }
+    prepareWeek();
 };
 
 // --- Team Editor ---
@@ -617,35 +960,359 @@ document.getElementById('edit-team-save').onclick = () => {
     }
 };
 
-function prepareRound() {
+const COPA_PHASE_NAMES = ['Primeira Fase', 'Oitavas', 'Quartas', 'Semifinal', 'Final'];
+const ESTADUAL_ROUND_NAMES = { 0: 'Rodada 1', 1: 'Rodada 2', 2: 'Rodada 3' };
+
+function getCompTagColor(type) {
+    if (type === 'estadual_group' || type === 'estadual_final') return '#f97316';
+    if (type === 'copa_br') return '#22c55e';
+    if (type === 'brasileirao') return '#a855f7';
+    return '#6b7280';
+}
+function getCompName(entry) {
+    if (!entry) return 'Treino';
     let myTeam = teams.find(t => t.id === myTeamId);
-    let mySchedule = myTeam.league === 'A' ? scheduleA : (myTeam.league === 'B' ? scheduleB : scheduleC);
-    const roundMatches = mySchedule[currentRound];
-    currentRoundText.innerText = currentRound + 1;
+    if (entry.type === 'estadual_group') {
+        let baseName = STATE_NAMES[myTeam ? myTeam.state : ''] || 'Estadual';
+        return baseName + ' - ' + (ESTADUAL_ROUND_NAMES[entry.estadualRound] || 'Fase');
+    }
+    if (entry.type === 'estadual_final') return (STATE_NAMES[myTeam ? myTeam.state : ''] || 'Estadual') + ' - Final';
+    if (entry.type === 'copa_br') return 'Copa BR - ' + (COPA_PHASE_NAMES[entry.copaPhase] || 'Fase ' + (entry.copaPhase + 1));
+    if (entry.type === 'brasileirao') return 'Brasileirão';
+    return 'Treino';
+}
+function simulateMatchResult(m) {
+    let tA = teams.find(t => t.id === m.a);
+    let tB = teams.find(t => t.id === m.b);
+    let ovrA = (tA ? tA.fin + tA.spd + tA.stm + tA.pre : 0) + 10;
+    let ovrB = (tB ? tB.fin + tB.spd + tB.stm + tB.pre : 0) + 10;
+    let chanceA = ovrA / (ovrA + ovrB);
+    let goals = 2 + Math.floor(Math.random() * 4);
+    m.scoreA = 0; m.scoreB = 0;
+    for (let i = 0; i < goals; i++) { if (Math.random() < chanceA) m.scoreA++; else m.scoreB++; }
+    m.finished = true;
+}
+function getMyMatchForWeek(calEntry) {
+    let myTeam = teams.find(t => t.id === myTeamId);
+    if (!myTeam) return null;
+    if (calEntry.type === 'estadual_group') {
+        let est = estadualData[myTeam.state];
+        if (!est || !est.teams.includes(myTeamId)) return null;
+        let round = est.schedule[calEntry.estadualRound];
+        return round ? round.find(m => m.a === myTeamId || m.b === myTeamId) : null;
+    }
+    if (calEntry.type === 'estadual_final') {
+        let est = estadualData[myTeam.state];
+        if (!est || !est.final) return null;
+        return (est.final.a === myTeamId || est.final.b === myTeamId) ? est.final : null;
+    }
+    if (calEntry.type === 'brasileirao') {
+        let mySchedule = myTeam.league === 'A' ? scheduleA : (myTeam.league === 'B' ? scheduleB : scheduleC);
+        let round = mySchedule[calEntry.brasRound];
+        return round ? round.find(m => m.a === myTeamId || m.b === myTeamId) : null;
+    }
+    if (calEntry.type === 'copa_br') {
+        if (!copaBrasil || !copaBrasil.qualified.includes(myTeamId)) return null;
+        let phase = copaBrasil.phases[calEntry.copaPhase];
+        if (!phase) return null;
+        let matchup = phase.find(mu => mu.team1 === myTeamId || mu.team2 === myTeamId);
+        if (!matchup || matchup.winner != null) return null;
+        return calEntry.copaLeg === 'ida' ? matchup.leg1 : matchup.leg2;
+    }
+    return null;
+}
+
+function prepareWeek() {
+    if (currentWeek >= calendar.length) { handleSeasonEnd(); return; }
+    let calEntry = calendar[currentWeek];
+    let myTeam = teams.find(t => t.id === myTeamId);
     
+    // After estadual final, prepare estadual finals and generate Copa
+    if (calEntry.type === 'estadual_final') {
+        ALL_STATES.forEach(st => {
+            let est = estadualData[st];
+            if (!est || est.final) return;
+            let winnersA = getEstadualGroupStandings(est.groups.A, est.schedule);
+            let winnersB = getEstadualGroupStandings(est.groups.B, est.schedule);
+            est.final = { a: winnersA[0], b: winnersB[0], scoreA: 0, scoreB: 0, finished: false };
+        });
+    }
+    if (calEntry.type === 'brasileirao' && calEntry.brasRound === 0 && !copaBrasil) {
+        ALL_STATES.forEach(st => {
+            let est = estadualData[st];
+            if (est && est.final && est.final.finished && !est.champion) {
+                est.champion = est.final.scoreA >= est.final.scoreB ? est.final.a : est.final.b;
+                let champTeam = teams.find(t => t.id === est.champion);
+                if (champTeam) {
+                    champTeam.estadualTitles = (champTeam.estadualTitles || 0) + 1;
+                }
+            }
+        });
+        generateCopaBrasil();
+    }
+    
+    currentRoundText.innerText = `Sem ${currentWeek + 1}`;
+    let myMatch = getMyMatchForWeek(calEntry);
+    
+    if (!myMatch) {
+        // Simulate background matches for this week
+        simulateBackgroundWeek(calEntry);
+        currentWeek++;
+        saveGame();
+        renderSchedule();
+        showOverlayMsg(`SEMANA ${currentWeek}\n\n⚽ TREINO\nSem jogo nesta semana`);
+        return;
+    }
+    
+    currentCanvasMatch = myMatch;
     liveMatches = [];
-    currentCanvasMatch = null;
-
-    let allRoundMatches = scheduleA[currentRound].concat(scheduleB[currentRound], scheduleC[currentRound]);
-
-    allRoundMatches.forEach(m => {
-        if (m.a === myTeamId || m.b === myTeamId) currentCanvasMatch = m;
-        else liveMatches.push(m);
-    });
-
+    if (calEntry.type === 'brasileirao') {
+        let br = calEntry.brasRound;
+        scheduleA[br].concat(scheduleB[br], scheduleC[br]).forEach(m => { if (m !== currentCanvasMatch) liveMatches.push(m); });
+    } else if (calEntry.type === 'estadual_group') {
+        let est = estadualData[myTeam.state];
+        if (est) est.schedule[calEntry.estadualRound].forEach(m => { if (m !== currentCanvasMatch) liveMatches.push(m); });
+    }
+    
     teamAConfig = teams.find(t => t.id === currentCanvasMatch.a);
     teamBConfig = teams.find(t => t.id === currentCanvasMatch.b);
-    
     teamANameEl.innerText = teamAConfig.name;
     teamBNameEl.innerText = teamBConfig.name;
     swatchA.style.background = teamAConfig.color;
     swatchB.style.background = teamBConfig.color;
-
     renderLiveMatches();
     renderStandings();
     renderSchedule();
-    
+    formationMatchText.innerText = `[${getCompName(calEntry)}] ${teamAConfig.name} vs ${teamBConfig.name}`;
     showFormationScreen();
+}
+
+function simulateBackgroundWeek(calEntry) {
+    if (calEntry.type === 'estadual_group') {
+        ALL_STATES.forEach(st => {
+            let est = estadualData[st];
+            if (!est) return;
+            let round = est.schedule[calEntry.estadualRound];
+            if (round) round.forEach(m => { if (!m.finished) simulateMatchResult(m); });
+        });
+    }
+    if (calEntry.type === 'estadual_final') {
+        ALL_STATES.forEach(st => {
+            let est = estadualData[st];
+            if (est && est.final && !est.final.finished && est.final.a !== myTeamId && est.final.b !== myTeamId) {
+                simulateMatchResult(est.final);
+                est.champion = est.final.scoreA >= est.final.scoreB ? est.final.a : est.final.b;
+            }
+        });
+    }
+    if (calEntry.type === 'brasileirao') {
+        let br = calEntry.brasRound;
+        scheduleA[br].concat(scheduleB[br], scheduleC[br]).forEach(m => { if (!m.finished) simulateMatchResult(m); });
+        // Update standings
+        scheduleA[br].concat(scheduleB[br], scheduleC[br]).forEach(m => {
+            let tA = teams.find(t => t.id === m.a); let tB = teams.find(t => t.id === m.b);
+            if (!tA || !tB) return;
+            tA.pld++; tB.pld++; tA.gf += m.scoreA; tB.gf += m.scoreB; tA.ga += m.scoreB; tB.ga += m.scoreA;
+            tA.gd = tA.gf - tA.ga; tB.gd = tB.gf - tB.ga;
+            if (m.scoreA > m.scoreB) { tA.pts += 3; tA.w++; tB.l++; }
+            else if (m.scoreB > m.scoreA) { tB.pts += 3; tB.w++; tA.l++; }
+            else { tA.pts++; tB.pts++; tA.d++; tB.d++; }
+        });
+        currentBrasRound++;
+    }
+    if (calEntry.type === 'copa_br' && copaBrasil) {
+        let phase = copaBrasil.phases[calEntry.copaPhase];
+        if (phase) {
+            phase.forEach(mu => {
+                let leg = calEntry.copaLeg === 'ida' ? mu.leg1 : mu.leg2;
+                if (!leg.finished) simulateMatchResult(leg);
+            });
+            if (calEntry.copaLeg === 'volta') advanceCopaPhase();
+        }
+    }
+}
+
+function renderSchedule() {
+    const scheduleList = document.getElementById('schedule-list');
+    scheduleList.innerHTML = '';
+    calendar.forEach((entry, idx) => {
+        let myMatch = getMyMatchForWeek(entry);
+        let compName = getCompName(entry);
+        let tagColor = getCompTagColor(entry.type);
+        let statusHtml = '', cardClass = 'schedule-card', oppHtml = '';
+        if (myMatch) {
+            let isHome = myMatch.a === myTeamId;
+            let oppId = isHome ? myMatch.b : myMatch.a;
+            let oppTeam = teams.find(t => t.id === oppId);
+            if (idx < currentWeek && myMatch.finished) {
+                let myS = isHome ? myMatch.scoreA : myMatch.scoreB, opS = isHome ? myMatch.scoreB : myMatch.scoreA;
+                let c = myS > opS ? '#22c55e' : (myS === opS ? '#a1a1aa' : '#ef4444');
+                statusHtml = `<div style="font-size:1.3rem;font-weight:bold;color:${c};">${myS}-${opS}</div>`;
+            } else if (idx === currentWeek) { cardClass += ' current'; statusHtml = `<div style="font-size:1rem;color:var(--accent-color);font-weight:bold;">HOJE</div>`; }
+            else statusHtml = `<div style="font-size:0.9rem;color:rgba(255,255,255,0.5);">A JOGAR</div>`;
+            if (oppTeam) oppHtml = `<div style="display:flex;align-items:center;justify-content:center;gap:5px;font-size:0.85rem;margin-top:3px;"><div class="color-swatch" style="width:13px;height:13px;background:${oppTeam.color};"></div>${oppTeam.name}</div>`;
+        } else {
+            statusHtml = idx <= currentWeek ? `<div style="font-size:0.85rem;color:#6b7280;">TREINO</div>` : `<div style="font-size:0.85rem;color:rgba(255,255,255,0.3);">-</div>`;
+            if (idx === currentWeek) cardClass += ' current';
+        }
+        let legLbl = entry.type === 'copa_br' ? ` ${entry.copaLeg === 'ida' ? 'Ida' : 'Volta'}` : '';
+        const card = document.createElement('div');
+        card.className = cardClass;
+        card.innerHTML = `<div style="font-size:0.75rem;color:#a1a1aa;">Sem ${idx+1}</div><div class="schedule-comp-tag" style="background:${tagColor}20;color:${tagColor};">${compName}${legLbl}</div>${statusHtml}${oppHtml}`;
+        scheduleList.appendChild(card);
+        if (idx === currentWeek) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }), 100);
+    });
+}
+
+function finishWeek() {
+    let calEntry = calendar[currentWeek];
+    currentCanvasMatch.scoreA = scoreA;
+    currentCanvasMatch.scoreB = scoreB;
+    currentCanvasMatch.finished = true;
+    liveMatches.forEach(m => m.finished = true);
+    
+    // Simulate ALL other background matches for this week type
+    if (calEntry.type === 'estadual_group') {
+        ALL_STATES.forEach(st => {
+            let est = estadualData[st]; if (!est) return;
+            let round = est.schedule[calEntry.estadualRound];
+            if (round) round.forEach(m => { if (!m.finished) simulateMatchResult(m); });
+        });
+    }
+    if (calEntry.type === 'estadual_final') {
+        ALL_STATES.forEach(st => {
+            let e2 = estadualData[st]; if (!e2 || !e2.final) return;
+            if (!e2.final.finished) {
+                simulateMatchResult(e2.final);
+            }
+            if (!e2.champion) {
+                e2.champion = e2.final.scoreA >= e2.final.scoreB ? e2.final.a : e2.final.b;
+                let champTeam = teams.find(t => t.id === e2.champion);
+                if (champTeam) {
+                    champTeam.estadualTitles = (champTeam.estadualTitles || 0) + 1;
+                }
+            }
+        });
+    }
+    if (calEntry.type === 'brasileirao') {
+        let br = calEntry.brasRound;
+        scheduleA[br].concat(scheduleB[br], scheduleC[br]).forEach(m => {
+            if (!m.finished) simulateMatchResult(m);
+            let tA = teams.find(t => t.id === m.a); let tB = teams.find(t => t.id === m.b);
+            if (!tA || !tB) return;
+            tA.pld++; tB.pld++; tA.gf += m.scoreA; tB.gf += m.scoreB; tA.ga += m.scoreB; tB.ga += m.scoreA;
+            tA.gd = tA.gf - tA.ga; tB.gd = tB.gf - tB.ga;
+            if (m.scoreA > m.scoreB) { tA.pts += 3; tA.w++; tB.l++; }
+            else if (m.scoreB > m.scoreA) { tB.pts += 3; tB.w++; tA.l++; }
+            else { tA.pts++; tB.pts++; tA.d++; tB.d++; }
+        });
+        currentBrasRound++;
+        renderStandings();
+    }
+    if (calEntry.type === 'copa_br' && copaBrasil) {
+        let phase = copaBrasil.phases[calEntry.copaPhase];
+        if (phase) {
+            phase.forEach(mu => {
+                let leg = calEntry.copaLeg === 'ida' ? mu.leg1 : mu.leg2;
+                if (!leg.finished) simulateMatchResult(leg);
+            });
+            if (calEntry.copaLeg === 'volta') advanceCopaPhase();
+        }
+    }
+    
+    // Economy
+    let myTeam = teams.find(t => t.id === myTeamId);
+    let baseAtt = calEntry.type === 'brasileirao' ? (myTeam.league === 'A' ? 25000 : (myTeam.league === 'B' ? 8000 : 2000)) : (calEntry.type === 'copa_br' ? 15000 : 3000);
+    let attendance = Math.floor(baseAtt + Math.random() * baseAtt * 0.5);
+    let income = attendance * 50;
+    myFunds += income;
+    myFundsText.innerText = formatCurrency(myFunds);
+    
+    let oppTeamId = currentCanvasMatch.a === myTeamId ? currentCanvasMatch.b : currentCanvasMatch.a;
+    let oppTeam = teams.find(t => t.id === oppTeamId);
+    let isHome = currentCanvasMatch.a === myTeamId;
+    let myScore = isHome ? currentCanvasMatch.scoreA : currentCanvasMatch.scoreB;
+    let oppScore = isHome ? currentCanvasMatch.scoreB : currentCanvasMatch.scoreA;
+    myMatchHistory.push({ oppName: oppTeam.name, oppColor: oppTeam.color, scoreA: myScore, scoreB: oppScore, isWin: myScore > oppScore, isDraw: myScore === oppScore });
+    
+    currentWeek++;
+    if (calEntry.type === 'brasileirao') currentRound++;
+    saveGame();
+    renderSchedule();
+    
+    if (currentWeek >= calendar.length) {
+        handleSeasonEnd();
+    } else {
+        let compLabel = getCompName(calEntry);
+        showOverlayMsg(`FIM - ${compLabel}\n\nPúblico: ${attendance.toLocaleString('pt-BR')}\nRenda: R$ ${formatCurrency(income)}`);
+    }
+}
+
+function handleSeasonEnd() {
+    let sortedA = teams.filter(t => t.league === 'A').sort((a, b) => (b.pts - a.pts) || (b.w - a.w) || (b.gd - a.gd) || (b.gf - a.gf));
+    let sortedB = teams.filter(t => t.league === 'B').sort((a, b) => (b.pts - a.pts) || (b.w - a.w) || (b.gd - a.gd) || (b.gf - a.gf));
+    let sortedC = teams.filter(t => t.league === 'C').sort((a, b) => (b.pts - a.pts) || (b.w - a.w) || (b.gd - a.gd) || (b.gf - a.gf));
+    sortedA[0].titlesA++; sortedB[0].titlesB++; sortedC[0].titlesC++;
+    let relegatedA = sortedA.slice(-4), promotedB = sortedB.slice(0, 4);
+    let relegatedB = sortedB.slice(-4), promotedC = sortedC.slice(0, 4);
+    relegatedA.forEach(t => t.league = 'B'); promotedB.forEach(t => t.league = 'A');
+    relegatedB.forEach(t => t.league = 'C'); promotedC.forEach(t => t.league = 'B');
+    
+    let copaChampName = copaBrasil && copaBrasil.champion ? (teams.find(t => t.id === copaBrasil.champion) || {}).name || '?' : 'N/A';
+    let infoHtml = `
+        <h3 style="color:#22c55e;margin-bottom:5px;">🏆 COPA DO BRASIL: ${copaChampName}</h3>
+        <p style="margin-bottom:15px;font-size:14px;"></p>
+        <h3 style="color:#ef4444;margin-bottom:5px;">REBAIXADOS PARA SÉRIE B:</h3>
+        <p style="margin-bottom:15px;font-size:14px;">${relegatedA.map(t => t.name).join(', ')}</p>
+        <h3 style="color:#22c55e;margin-bottom:5px;">PROMOVIDOS PARA SÉRIE A:</h3>
+        <p style="margin-bottom:15px;font-size:14px;">${promotedB.map(t => t.name).join(', ')}</p>
+        <h3 style="color:#ef4444;margin-bottom:5px;">REBAIXADOS PARA SÉRIE C:</h3>
+        <p style="margin-bottom:15px;font-size:14px;">${relegatedB.map(t => t.name).join(', ')}</p>
+        <h3 style="color:#22c55e;margin-bottom:5px;">PROMOVIDOS PARA SÉRIE B:</h3>
+        <p style="font-size:14px;">${promotedC.map(t => t.name).join(', ')}</p>
+    `;
+    document.getElementById('season-relegation-info').innerHTML = infoHtml;
+    overlay.classList.remove('hidden');
+    overlayMsgBox.classList.add('hidden'); overlayFormationBox.classList.add('hidden');
+    teamEditModal.classList.add('hidden');
+    document.getElementById('season-end-modal').classList.remove('hidden');
+}
+
+document.getElementById('btn-next-season').onclick = () => {
+    teams.forEach(t => { t.pts = 0; t.pld = 0; t.w = 0; t.d = 0; t.l = 0; t.gf = 0; t.ga = 0; t.gd = 0; });
+    currentSeason++;
+    buildSeason();
+    saveGame();
+    document.getElementById('season-end-modal').classList.add('hidden');
+    prepareWeek();
+};
+
+function saveGame() {
+    const saveData = {
+        version: 2,
+        teams,
+        scheduleA,
+        scheduleB,
+        scheduleC,
+        calendar,
+        currentWeek,
+        currentBrasRound,
+        currentRound,
+        estadualData,
+        copaBrasil,
+        myTeamId,
+        currentSeason,
+        myFormation,
+        myAttitude,
+        myFunds,
+        availablePoints,
+        myMatchHistory
+    };
+    try {
+        localStorage.setItem('botao_league_save', JSON.stringify(saveData));
+    } catch (e) {
+        console.error("Erro ao salvar jogo:", e);
+    }
 }
 
 document.getElementById('tab-serie-a').onclick = () => {
@@ -682,7 +1349,7 @@ function updateLiveMatches() {
         if (Math.random() < 0.015) { 
             const tA = teams.find(t => t.id === m.a);
             const tB = teams.find(t => t.id === m.b);
-            const ovrA = (tA ? tA.fin + tA.spd + tA.stm + tA.pre : 0) + 10; // +10 evita divisão por zero
+            const ovrA = (tA ? tA.fin + tA.spd + tA.stm + tA.pre : 0) + 10;
             const ovrB = (tB ? tB.fin + tB.spd + tB.stm + tB.pre : 0) + 10;
             const chanceA = ovrA / (ovrA + ovrB);
             
@@ -696,12 +1363,10 @@ function updateLiveMatches() {
 
 function renderLiveMatches() {
     liveMatchesList.innerHTML = '';
-    liveMatches.filter(m => {
-        const tA = teams.find(t => t.id === m.a);
-        return tA && tA.league === currentLeagueTab;
-    }).forEach(m => {
+    liveMatches.forEach(m => {
         const tA = teams.find(t => t.id === m.a);
         const tB = teams.find(t => t.id === m.b);
+        if (!tA || !tB) return;
         const li = document.createElement('li');
         li.className = 'match-item';
         li.innerHTML = `
@@ -713,210 +1378,6 @@ function renderLiveMatches() {
     });
 }
 
-function renderSchedule() {
-    const scheduleList = document.getElementById('schedule-list');
-    scheduleList.innerHTML = '';
-    
-    let myTeam = teams.find(t => t.id === myTeamId);
-    let mySchedule = myTeam.league === 'A' ? scheduleA : (myTeam.league === 'B' ? scheduleB : scheduleC);
-    
-    // Unify matches
-    let allMatches = [];
-    
-    for (let r = 0; r < mySchedule.length; r++) {
-        let roundMatch = mySchedule[r].find(m => m.a === myTeamId || m.b === myTeamId);
-        if (roundMatch) {
-            allMatches.push({
-                round: r + 1,
-                comp: 'Brasileirão',
-                match: roundMatch
-            });
-        }
-    }
-    
-    allMatches.forEach(item => {
-        const m = item.match;
-        const isHome = m.a === myTeamId;
-        const oppId = isHome ? m.b : m.a;
-        const oppTeam = teams.find(t => t.id === oppId);
-        
-        let statusHtml = '';
-        let cardClass = 'schedule-card';
-        
-        if (item.round - 1 < currentRound) {
-            // Finished
-            let myScore = isHome ? m.scoreA : m.scoreB;
-            let oppScore = isHome ? m.scoreB : m.scoreA;
-            let color = myScore > oppScore ? '#22c55e' : (myScore === oppScore ? '#a1a1aa' : '#ef4444');
-            statusHtml = `<div style="font-size: 1.5rem; font-weight: bold; color: ${color};">${myScore} - ${oppScore}</div>`;
-        } else if (item.round - 1 === currentRound) {
-            // Current
-            cardClass += ' current';
-            statusHtml = `<div style="font-size: 1rem; color: var(--accent-color); font-weight: bold;">HOJE</div>`;
-        } else {
-            // Future
-            statusHtml = `<div style="font-size: 0.9rem; color: rgba(255,255,255,0.5);">A JOGAR</div>`;
-        }
-        
-        let oppHtml = `<div style="display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.9rem; margin-top: 5px;"><div class="color-swatch" style="width: 15px; height: 15px; background: ${oppTeam.color}; margin-right: 5px;"></div> ${oppTeam.name} ${isHome ? '(C)' : '(F)'}</div>`;
-        
-        const card = document.createElement('div');
-        card.className = cardClass;
-        card.innerHTML = `
-            <div style="font-size: 0.8rem; color: #a1a1aa;">Rodada ${item.round}</div>
-            <div class="schedule-comp-tag">${item.comp}</div>
-            ${statusHtml}
-            ${oppHtml}
-        `;
-        scheduleList.appendChild(card);
-        
-        // Auto-scroll to current match
-        if (item.round - 1 === currentRound) {
-            setTimeout(() => {
-                card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }, 100);
-        }
-    });
-}
-
-function finishRound() {
-    currentCanvasMatch.scoreA = scoreA;
-    currentCanvasMatch.scoreB = scoreB;
-    currentCanvasMatch.finished = true;
-    liveMatches.forEach(m => m.finished = true);
-
-    let allRoundMatches = scheduleA[currentRound].concat(scheduleB[currentRound], scheduleC[currentRound]);
-    allRoundMatches.forEach(m => {
-        let tA = teams.find(t => t.id === m.a);
-        let tB = teams.find(t => t.id === m.b);
-        
-        tA.pld++; tB.pld++;
-        tA.gf += m.scoreA; tB.gf += m.scoreB;
-        tA.ga += m.scoreB; tB.ga += m.scoreA;
-        tA.gd = tA.gf - tA.ga;
-        tB.gd = tB.gf - tB.ga;
-
-        if (m.scoreA > m.scoreB) { tA.pts += 3; tA.w++; tB.l++; } 
-        else if (m.scoreB > m.scoreA) { tB.pts += 3; tB.w++; tA.l++; } 
-        else { tA.pts += 1; tB.pts += 1; tA.d++; tB.d++; }
-    });
-
-    renderStandings();
-    
-    // Economy and History
-    let myTeam = teams.find(t => t.id === myTeamId);
-    let leagueTeams = teams.filter(t => t.league === myTeam.league).sort((a,b) => {
-        if (b.pts !== a.pts) return b.pts - a.pts;
-        if (b.w !== a.w) return b.w - a.w;
-        if (b.gd !== a.gd) return b.gd - a.gd;
-        return b.gf - a.gf;
-    });
-    let rank = leagueTeams.findIndex(t => t.id === myTeamId); // 0 to 19
-    let baseAttendance = myTeam.league === 'A' ? 25000 : (myTeam.league === 'B' ? 8000 : 2000);
-    let rankBonus = myTeam.league === 'A' ? (19 - rank) * 1500 : (myTeam.league === 'B' ? (19 - rank) * 600 : (19 - rank) * 200);
-    let winRate = myTeam.pld > 0 ? (myTeam.w / myTeam.pld) : 0;
-    let wrBonus = baseAttendance * 0.5 * winRate;
-    
-    let attendance = Math.floor(baseAttendance + rankBonus + wrBonus);
-    let income = attendance * 50;
-    myFunds += income;
-    myFundsText.innerText = formatCurrency(myFunds);
-    
-    let oppTeamId = currentCanvasMatch.a === myTeamId ? currentCanvasMatch.b : currentCanvasMatch.a;
-    let oppTeam = teams.find(t => t.id === oppTeamId);
-    let isHome = currentCanvasMatch.a === myTeamId;
-    let myScore = isHome ? currentCanvasMatch.scoreA : currentCanvasMatch.scoreB;
-    let oppScore = isHome ? currentCanvasMatch.scoreB : currentCanvasMatch.scoreA;
-    myMatchHistory.push({
-        oppName: oppTeam.name,
-        oppColor: oppTeam.color,
-        scoreA: myScore,
-        scoreB: oppScore,
-        isWin: myScore > oppScore,
-        isDraw: myScore === oppScore
-    });
-    
-    currentRound++;
-    saveGame();
-    renderSchedule();
-
-    if (currentRound >= 38) {
-        handleSeasonEnd();
-    } else {
-        showOverlayMsg(`FIM DA RODADA\n\nPúblico: ${attendance.toLocaleString('pt-BR')}\nRenda: R$ ${formatCurrency(income)}\nTotal: R$ ${formatCurrency(myFunds)}`);
-    }
-}
-
-function handleSeasonEnd() {
-    let sortedA = teams.filter(t => t.league === 'A').sort((a, b) => {
-        if (b.pts !== a.pts) return b.pts - a.pts;
-        if (b.w !== a.w) return b.w - a.w;
-        if (b.gd !== a.gd) return b.gd - a.gd;
-        return b.gf - a.gf;
-    });
-    let sortedB = teams.filter(t => t.league === 'B').sort((a, b) => {
-        if (b.pts !== a.pts) return b.pts - a.pts;
-        if (b.w !== a.w) return b.w - a.w;
-        if (b.gd !== a.gd) return b.gd - a.gd;
-        return b.gf - a.gf;
-    });
-    let sortedC = teams.filter(t => t.league === 'C').sort((a, b) => {
-        if (b.pts !== a.pts) return b.pts - a.pts;
-        if (b.w !== a.w) return b.w - a.w;
-        if (b.gd !== a.gd) return b.gd - a.gd;
-        return b.gf - a.gf;
-    });
-
-    sortedA[0].titlesA++;
-    sortedB[0].titlesB++;
-    sortedC[0].titlesC++;
-
-    let relegatedA = sortedA.slice(-4);
-    let promotedB = sortedB.slice(0, 4);
-    let relegatedB = sortedB.slice(-4);
-    let promotedC = sortedC.slice(0, 4);
-    
-    relegatedA.forEach(t => t.league = 'B');
-    promotedB.forEach(t => t.league = 'A');
-    relegatedB.forEach(t => t.league = 'C');
-    promotedC.forEach(t => t.league = 'B');
-    
-    let infoHtml = `
-        <h3 style="color:#ef4444; margin-bottom:5px;">REBAIXADOS PARA SÉRIE B:</h3>
-        <p style="margin-bottom:15px; font-size:14px;">${relegatedA.map(t => t.name).join(', ')}</p>
-        <h3 style="color:#22c55e; margin-bottom:5px;">PROMOVIDOS PARA SÉRIE A:</h3>
-        <p style="margin-bottom:15px; font-size:14px;">${promotedB.map(t => t.name).join(', ')}</p>
-        <h3 style="color:#ef4444; margin-bottom:5px;">REBAIXADOS PARA SÉRIE C:</h3>
-        <p style="margin-bottom:15px; font-size:14px;">${relegatedB.map(t => t.name).join(', ')}</p>
-        <h3 style="color:#22c55e; margin-bottom:5px;">PROMOVIDOS PARA SÉRIE B:</h3>
-        <p style="font-size:14px;">${promotedC.map(t => t.name).join(', ')}</p>
-    `;
-    
-    document.getElementById('season-relegation-info').innerHTML = infoHtml;
-    
-    overlay.classList.remove('hidden');
-    overlayMsgBox.classList.add('hidden');
-    overlayFormationBox.classList.add('hidden');
-    teamEditModal.classList.add('hidden');
-    document.getElementById('season-end-modal').classList.remove('hidden');
-}
-
-document.getElementById('btn-next-season').onclick = () => {
-    teams.forEach(t => {
-        t.pts = 0; t.pld = 0; t.w = 0; t.d = 0; t.l = 0; t.gf = 0; t.ga = 0; t.gd = 0;
-    });
-    
-    scheduleA = generateRoundRobin(teams.filter(t => t.league === 'A'));
-    scheduleB = generateRoundRobin(teams.filter(t => t.league === 'B'));
-    scheduleC = generateRoundRobin(teams.filter(t => t.league === 'C'));
-    
-    currentRound = 0;
-    currentSeason++;
-    saveGame();
-    
-    document.getElementById('season-end-modal').classList.add('hidden');
-    prepareRound();
-};
 
 function renderStandings() {
     let leagueTeams = teams.filter(t => t.league === currentLeagueTab);
@@ -1067,8 +1528,8 @@ function showOverlayMsg(msg) {
 
 overlayBtnNext.onclick = () => {
     overlay.classList.add('hidden');
-    if (gameState === STATE.MATCH_OVER && currentRound < 38) {
-        prepareRound();
+    if (gameState === STATE.MATCH_OVER) {
+        prepareWeek();
     }
 };
 
@@ -1437,7 +1898,7 @@ function handleGameState() {
                 if (currentHalf === 1) {
                     gameState = STATE.HALF_TIME; stateTimer = 120; 
                 } else {
-                    gameState = STATE.MATCH_OVER; finishRound();
+                    gameState = STATE.MATCH_OVER; finishWeek();
                 }
             }
         }
@@ -1567,10 +2028,38 @@ function loop() {
 }
 
 function renderTrophyRoom() {
+    trophyList.innerHTML = '';
+    
+    if (currentTrophyTab === 'EST' || currentTrophyTab === 'COPA') {
+        let propKey = currentTrophyTab === 'EST' ? 'estadualTitles' : 'titlesCopa';
+        let winners = teams.filter(t => (t[propKey] || 0) > 0).sort((a,b) => b[propKey] - a[propKey]);
+        
+        if (winners.length === 0) {
+            trophyList.innerHTML = '<div style="color: #a1a1aa; text-align: center; margin-top: 20px;">Nenhum campeão registrado ainda.</div>';
+            return;
+        }
+        
+        winners.forEach((t, index) => {
+            let div = document.createElement('div');
+            div.style.cssText = 'display:flex; align-items:center; padding:10px; border-bottom:1px solid rgba(255,255,255,0.05);';
+            let colorBox = `<div style="width:20px; height:20px; border-radius:50%; background:${t.color}; margin-right:10px;"></div>`;
+            let rankStr = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : `${index+1}º`));
+            let extraLabel = currentTrophyTab === 'EST' ? `<div style="font-size:11px; color:#a1a1aa; margin-right:8px;">${t.state}</div>` : '';
+            div.innerHTML = `
+                <div style="width:30px; text-align:center; margin-right:10px; font-weight:bold; color:#fbbf24; font-size:16px;">${rankStr}</div>
+                ${colorBox}
+                <div style="flex:1; font-weight:bold;">${t.name}</div>
+                ${extraLabel}
+                <div style="font-weight:bold; color:#a855f7; font-size:16px;">${t[propKey]}x 🏆</div>
+            `;
+            trophyList.appendChild(div);
+        });
+        return;
+    }
+    
     let leagueKey = `titles${currentTrophyTab}`;
     let winners = teams.filter(t => t[leagueKey] > 0).sort((a,b) => b[leagueKey] - a[leagueKey]);
     
-    trophyList.innerHTML = '';
     if (winners.length === 0) {
         trophyList.innerHTML = '<div style="color: #a1a1aa; text-align: center; margin-top: 20px;">Nenhum campeão registrado ainda.</div>';
         return;
@@ -1578,19 +2067,14 @@ function renderTrophyRoom() {
     
     winners.forEach((t, index) => {
         let div = document.createElement('div');
-        div.style.display = 'flex';
-        div.style.alignItems = 'center';
-        div.style.padding = '10px';
-        div.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-        
+        div.style.cssText = 'display:flex; align-items:center; padding:10px; border-bottom:1px solid rgba(255,255,255,0.05);';
         let colorBox = `<div style="width:20px; height:20px; border-radius:50%; background:${t.color}; margin-right:10px;"></div>`;
         let rankStr = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : `${index+1}º`));
-        
         div.innerHTML = `
-            <div style="width: 30px; text-align: center; margin-right: 10px; font-weight: bold; color: #fbbf24; font-size: 16px;">${rankStr}</div>
+            <div style="width:30px; text-align:center; margin-right:10px; font-weight:bold; color:#fbbf24; font-size:16px;">${rankStr}</div>
             ${colorBox}
-            <div style="flex: 1; font-weight: bold;">${t.name}</div>
-            <div style="font-weight: bold; color: #a855f7; font-size: 16px;">${t[leagueKey]}x 🏆</div>
+            <div style="flex:1; font-weight:bold;">${t.name}</div>
+            <div style="font-weight:bold; color:#a855f7; font-size:16px;">${t[leagueKey]}x 🏆</div>
         `;
         trophyList.appendChild(div);
     });
@@ -1621,18 +2105,22 @@ btnCloseTrophyRoom.onclick = () => {
 
 function selectTrophyTab(tab) {
     currentTrophyTab = tab;
-    trophyTabA.style.border = tab === 'A' ? '1px solid var(--accent-color)' : 'none';
-    trophyTabA.style.opacity = tab === 'A' ? '1' : '0.5';
-    trophyTabB.style.border = tab === 'B' ? '1px solid var(--accent-color)' : 'none';
-    trophyTabB.style.opacity = tab === 'B' ? '1' : '0.5';
-    trophyTabC.style.border = tab === 'C' ? '1px solid var(--accent-color)' : 'none';
-    trophyTabC.style.opacity = tab === 'C' ? '1' : '0.5';
+    const allTabs = ['A', 'B', 'C', 'EST', 'COPA'];
+    allTabs.forEach(t => {
+        let el = document.getElementById(`trophy-tab-${t.toLowerCase()}`);
+        if (el) {
+            el.style.border = tab === t ? '1px solid var(--accent-color)' : 'none';
+            el.style.opacity = tab === t ? '1' : '0.5';
+        }
+    });
     renderTrophyRoom();
 }
 
 trophyTabA.onclick = () => selectTrophyTab('A');
 trophyTabB.onclick = () => selectTrophyTab('B');
 trophyTabC.onclick = () => selectTrophyTab('C');
+document.getElementById('trophy-tab-est').onclick = () => selectTrophyTab('EST');
+document.getElementById('trophy-tab-copa').onclick = () => selectTrophyTab('COPA');
 
 btnExportSave.onclick = () => {
     const saved = localStorage.getItem('botao_league_save');

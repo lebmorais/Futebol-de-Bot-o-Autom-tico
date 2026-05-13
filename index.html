@@ -204,10 +204,12 @@
                     <!-- Trophy Room Modal -->
                     <div id="trophy-room-modal" class="overlay-content hidden" style="width: 450px;">
                         <h2 style="color: #fbbf24; margin-bottom: 20px;">🏆 SALA DE TROFÉUS</h2>
-                        <div style="display: flex; width: 100%; gap: 10px; margin-bottom: 15px;">
-                            <button id="trophy-tab-a" class="btn-small" style="flex: 1; border: 1px solid var(--accent-color);">Série A</button>
-                            <button id="trophy-tab-b" class="btn-small" style="flex: 1; opacity: 0.5;">Série B</button>
-                            <button id="trophy-tab-c" class="btn-small" style="flex: 1; opacity: 0.5;">Série C</button>
+                        <div style="display: flex; flex-wrap: wrap; width: 100%; gap: 5px; margin-bottom: 15px;">
+                            <button id="trophy-tab-a" class="btn-small" style="flex: 1; min-width: 70px; border: 1px solid var(--accent-color);">Série A</button>
+                            <button id="trophy-tab-b" class="btn-small" style="flex: 1; min-width: 70px; opacity: 0.5;">Série B</button>
+                            <button id="trophy-tab-c" class="btn-small" style="flex: 1; min-width: 70px; opacity: 0.5;">Série C</button>
+                            <button id="trophy-tab-est" class="btn-small" style="flex: 1; min-width: 70px; opacity: 0.5;">Estaduais</button>
+                            <button id="trophy-tab-copa" class="btn-small" style="flex: 1; min-width: 70px; opacity: 0.5;">Copa BR</button>
                         </div>
                         <div id="trophy-list" style="max-height: 250px; overflow-y: auto; text-align: left; padding-right: 5px;">
                             <!-- Trophies injected here -->
@@ -237,7 +239,7 @@
             
             <div class="sidebar-panel live-scores">
                 <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3>RODADA <span id="current-round-text">1</span> DE 38</h3>
+                    <h3><span id="current-round-text">Sem 1</span></h3>
                     <h3 style="color: #22c55e;">R$ <span id="my-funds-text">0</span></h3>
                 </div>
                 <ul id="live-matches-list" class="matches-list">
