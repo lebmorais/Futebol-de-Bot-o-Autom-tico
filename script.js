@@ -288,7 +288,7 @@ const STATE_NAMES = {
     PR: 'Paranaense', SC: 'Catarinense', BA: 'Baiano', PE: 'Pernambucano',
     CE: 'Cearense', GO: 'Goiano', PA: 'Paraense', AL: 'Alagoano',
     MT: 'Mato-Grossense', PB: 'Paraibano', SE: 'Sergipano', MA: 'Maranhense',
-    AM: 'Amazonense'
+    AM: 'Amazonense', OUTRO: 'Torneio Neutro'
 };
 
 const ALL_STATES = Object.keys(STATE_NAMES);
@@ -464,8 +464,30 @@ function generateSingleRoundRobin(teamIds) {
 // --- Estadual Generation ---
 function generateEstadual(stateCode) {
     let stateTeams = teams.filter(t => t.state === stateCode);
-    // Sort by overall descending, pick top 8
-    stateTeams.sort((a, b) => (b.fin + b.spd + b.stm + b.pre) - (a.fin + a.spd + a.stm + a.pre));
+    
+    // Garante prioridade máxima para o time do jogador entrar no estadual do seu estado (mesmo tendo overall inicial zero no modo custom)
+    stateTeams.sort((a, b) => {
+        if (a.id === myTeamId) return -1;
+        if (b.id === myTeamId) return 1;
+        let ovrA = a.fin + a.spd + a.stm + a.pre;
+        let ovrB = b.fin + b.spd + b.stm + b.pre;
+        return ovrB - ovrA;
+    });
+    
+    // Preenche com times genéricos se houver menos de 8 times para não bugar o calendário
+    let needed = 8 - stateTeams.length;
+    for (let i = 0; i < needed; i++) {
+        let newId = teams.length ? Math.max(...teams.map(t => t.id)) + 1 + i : 2000 + i;
+        let genTeam = {
+            id: newId, name: stateCode + ' FC ' + (i+1), color: '#888888', colorDark: '#444444', league: null, state: stateCode,
+            estadualOnly: true, fin: 2, spd: 2, stm: 2, pre: 2,
+            pts: 0, pld: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0,
+            titlesA: 0, titlesB: 0, titlesC: 0, estadualTitles: 0, titlesCopa: 0
+        };
+        teams.push(genTeam);
+        stateTeams.push(genTeam);
+    }
+    
     stateTeams = stateTeams.slice(0, 8);
     // Shuffle
     for (let i = stateTeams.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1)); [stateTeams[i], stateTeams[j]] = [stateTeams[j], stateTeams[i]]; }
@@ -479,7 +501,7 @@ function generateEstadual(stateCode) {
     // Merge schedules: each round has matches from both groups
     let schedule = [];
     for (let r = 0; r < 3; r++) {
-        schedule.push([...scheduleGA[r], ...scheduleGB[r]]);
+        schedule.push([...(scheduleGA[r] || []), ...(scheduleGB[r] || [])]);
     }
     
     return {
@@ -596,6 +618,11 @@ function advanceCopaPhase() {
                 champTeam.titlesCopa = (champTeam.titlesCopa || 0) + 1;
             }
             copaBrasil.titleAwarded = true;
+            if (winners[0] === myTeamId) {
+                myFunds += 5000000;
+                globalNotifications.push({ msg: `PRÊMIO COPA BRASIL: R$ 5M`, timer: 240, color: '#22c55e' });
+                if (typeof myFundsText !== 'undefined' && myFundsText) myFundsText.innerText = formatCurrency(myFunds);
+            }
         }
         return;
     }
@@ -650,8 +677,9 @@ function buildSeason() {
     // Generate estaduais for all states
     estadualData = {};
     ALL_STATES.forEach(st => {
-        let stateTeamCount = teams.filter(t => t.state === st).length;
-        if (stateTeamCount >= 4) {
+        let stateTeams = teams.filter(t => t.state === st);
+        let hasMyTeam = stateTeams.some(t => t.id === myTeamId);
+        if (stateTeams.length >= 4 || hasMyTeam) {
             estadualData[st] = generateEstadual(st);
         }
     });
@@ -864,12 +892,15 @@ let editingTeamId = null;
 let previousOverlayBox = null;
 
 function getAttributeCost(val) {
-    if (val < 15) {
-        // Base 100k to 1M at level 15
-        return 100000 * Math.pow(1.212, val);
+    if (val < 10) {
+        // Níveis 1 a 10: 100k a 5M
+        return 100000 * Math.pow(50, val / 9);
+    } else if (val < 20) {
+        // Níveis 11 a 20: 5M a 15M
+        return 5000000 * Math.pow(3, (val - 10) / 9);
     } else {
-        // From level 15 upwards, scales much harder
-        return 1000000 * Math.pow(1.415, val - 15);
+        // Níveis 21 a 25: 15M a 30M
+        return 15000000 * Math.pow(2, (val - 20) / 4);
     }
 }
 
@@ -953,8 +984,12 @@ document.getElementById('edit-team-save').onclick = () => {
     saveGame();
     teamEditModal.classList.add('hidden');
     
-    if (previousOverlayBox) {
-        previousOverlayBox.classList.remove('hidden');
+    let toRestore = previousOverlayBox;
+    if (!toRestore && gameState === STATE.MENU && currentCanvasMatch && !currentCanvasMatch.finished) {
+        toRestore = overlayFormationBox;
+    }
+    if (toRestore) {
+        toRestore.classList.remove('hidden');
     } else {
         overlay.classList.add('hidden');
     }
@@ -981,7 +1016,7 @@ function getCompName(entry) {
     if (entry.type === 'brasileirao') return 'Brasileirão';
     return 'Treino';
 }
-function simulateMatchResult(m) {
+function simulateMatchResult(m, avoidDraw = false) {
     let tA = teams.find(t => t.id === m.a);
     let tB = teams.find(t => t.id === m.b);
     let ovrA = (tA ? tA.fin + tA.spd + tA.stm + tA.pre : 0) + 10;
@@ -990,6 +1025,9 @@ function simulateMatchResult(m) {
     let goals = 2 + Math.floor(Math.random() * 4);
     m.scoreA = 0; m.scoreB = 0;
     for (let i = 0; i < goals; i++) { if (Math.random() < chanceA) m.scoreA++; else m.scoreB++; }
+    if (avoidDraw && m.scoreA === m.scoreB) {
+        if (Math.random() < 0.5) m.scoreA++; else m.scoreB++;
+    }
     m.finished = true;
 }
 function getMyMatchForWeek(calEntry) {
@@ -1043,8 +1081,9 @@ function prepareWeek() {
             if (est && est.final && est.final.finished && !est.champion) {
                 est.champion = est.final.scoreA >= est.final.scoreB ? est.final.a : est.final.b;
                 let champTeam = teams.find(t => t.id === est.champion);
-                if (champTeam) {
+                if (champTeam && !est.titleAwarded) {
                     champTeam.estadualTitles = (champTeam.estadualTitles || 0) + 1;
+                    est.titleAwarded = true;
                 }
             }
         });
@@ -1057,10 +1096,23 @@ function prepareWeek() {
     if (!myMatch) {
         // Simulate background matches for this week
         simulateBackgroundWeek(calEntry);
+        
+        let msgOverlayText = `SEMANA ${currentWeek + 1}\n\n⚽ TREINO\nSem jogo nesta semana`;
+        if (calEntry.type === 'estadual_final') {
+            let myTeam = teams.find(t => t.id === myTeamId);
+            let est = myTeam ? estadualData[myTeam.state] : null;
+            if (est && est.champion != null) {
+                let champTeam = teams.find(t => t.id === est.champion);
+                let tA = teams.find(t => t.id === est.final.a);
+                let tB = teams.find(t => t.id === est.final.b);
+                msgOverlayText = `🏆 FINAL DO ESTADUAL\n\nCampeão: ${champTeam ? champTeam.name : 'Desconhecido'}\nPlacar: ${tA ? tA.name : ''} ${est.final.scoreA} x ${est.final.scoreB} ${tB ? tB.name : ''}`;
+            }
+        }
+        
         currentWeek++;
         saveGame();
         renderSchedule();
-        showOverlayMsg(`SEMANA ${currentWeek}\n\n⚽ TREINO\nSem jogo nesta semana`);
+        showOverlayMsg(msgOverlayText);
         return;
     }
     
@@ -1100,8 +1152,18 @@ function simulateBackgroundWeek(calEntry) {
         ALL_STATES.forEach(st => {
             let est = estadualData[st];
             if (est && est.final && !est.final.finished && est.final.a !== myTeamId && est.final.b !== myTeamId) {
-                simulateMatchResult(est.final);
+                simulateMatchResult(est.final, true);
                 est.champion = est.final.scoreA >= est.final.scoreB ? est.final.a : est.final.b;
+                let champTeam = teams.find(t => t.id === est.champion);
+                if (champTeam && !est.titleAwarded) {
+                    champTeam.estadualTitles = (champTeam.estadualTitles || 0) + 1;
+                    est.titleAwarded = true;
+                    if (est.champion === myTeamId) {
+                        myFunds += 2000000;
+                        globalNotifications.push({ msg: `PRÊMIO ESTADUAL: R$ 2M`, timer: 240, color: '#22c55e' });
+                        if (typeof myFundsText !== 'undefined' && myFundsText) myFundsText.innerText = formatCurrency(myFunds);
+                    }
+                }
             }
         });
     }
@@ -1183,13 +1245,22 @@ function finishWeek() {
         ALL_STATES.forEach(st => {
             let e2 = estadualData[st]; if (!e2 || !e2.final) return;
             if (!e2.final.finished) {
-                simulateMatchResult(e2.final);
+                simulateMatchResult(e2.final, true);
             }
             if (!e2.champion) {
+                if (e2.final.scoreA === e2.final.scoreB) {
+                    if (Math.random() < 0.5) e2.final.scoreA++; else e2.final.scoreB++;
+                }
                 e2.champion = e2.final.scoreA >= e2.final.scoreB ? e2.final.a : e2.final.b;
                 let champTeam = teams.find(t => t.id === e2.champion);
-                if (champTeam) {
+                if (champTeam && !e2.titleAwarded) {
                     champTeam.estadualTitles = (champTeam.estadualTitles || 0) + 1;
+                    e2.titleAwarded = true;
+                    if (e2.champion === myTeamId) {
+                        myFunds += 2000000;
+                        globalNotifications.push({ msg: `PRÊMIO ESTADUAL: R$ 2M`, timer: 240, color: '#22c55e' });
+                        if (typeof myFundsText !== 'undefined' && myFundsText) myFundsText.innerText = formatCurrency(myFunds);
+                    }
                 }
             }
         });
@@ -1404,11 +1475,14 @@ function renderStandings() {
             // Remember what was open
             if (!overlayMsgBox.classList.contains('hidden')) previousOverlayBox = overlayMsgBox;
             else if (!overlayFormationBox.classList.contains('hidden')) previousOverlayBox = overlayFormationBox;
-            else previousOverlayBox = null;
+            else if (document.getElementById('season-end-modal') && !document.getElementById('season-end-modal').classList.contains('hidden')) previousOverlayBox = document.getElementById('season-end-modal');
+            else if (!trophyRoomModal.classList.contains('hidden')) previousOverlayBox = previousOverlayBoxTrophy;
             
             overlay.classList.remove('hidden');
             overlayMsgBox.classList.add('hidden');
             overlayFormationBox.classList.add('hidden');
+            trophyRoomModal.classList.add('hidden');
+            if (document.getElementById('season-end-modal')) document.getElementById('season-end-modal').classList.add('hidden');
             teamEditModal.classList.remove('hidden');
         };
         tr.innerHTML = `
@@ -1879,6 +1953,20 @@ function handleGameState() {
             updateUI();
             
             if (timeLeft <= 0) {
+                let calEntry = calendar[currentWeek];
+                let isEstadualFinal = calEntry && calEntry.type === 'estadual_final';
+                
+                // Se for final do estadual e terminar empatado, ativamos o GOL DE OURO (Golden Goal) para evitar empates!
+                if (isEstadualFinal && currentHalf === 2 && scoreA === scoreB) {
+                    timeLeft = 1; // Trava para o jogo continuar até sair um gol
+                    if (!window.goldenGoalActive) {
+                        window.goldenGoalActive = true;
+                        globalNotifications.push({ msg: `GOL DE OURO!`, timer: 180, color: '#fbbf24' });
+                    }
+                    periodEl.innerText = 'GOL DE OURO';
+                    return;
+                }
+                
                 if (!isInjuryTime) {
                     let diff = Math.abs(scoreA - scoreB);
                     let extraMins = 0;
@@ -1894,6 +1982,7 @@ function handleGameState() {
                     }
                 }
                 
+                window.goldenGoalActive = false;
                 isInjuryTime = false;
                 if (currentHalf === 1) {
                     gameState = STATE.HALF_TIME; stateTimer = 120; 
@@ -1923,6 +2012,12 @@ function handleGameState() {
     if (gameState === STATE.GOAL_SCORED) {
         stateTimer--;
         if (stateTimer <= 0) {
+            if (window.goldenGoalActive) {
+                window.goldenGoalActive = false;
+                gameState = STATE.MATCH_OVER;
+                finishWeek();
+                return;
+            }
             resetPositions(generateFormationArray(myFormation.def, myFormation.mid, myFormation.att, myAttitude), getRandomFormation()); // Retain formations
             gameState = STATE.STARTING; stateTimer = 60; overlay.classList.add('hidden');
         }
@@ -2081,14 +2176,18 @@ function renderTrophyRoom() {
 }
 
 btnOpenTrophyRoom.onclick = () => {
-    const overlayContents = overlay.querySelectorAll('.overlay-content');
-    previousOverlayBoxTrophy = Array.from(overlayContents).find(el => !el.classList.contains('hidden') && el.id !== 'trophy-room-modal');
+    if (!trophyRoomModal.classList.contains('hidden')) return;
+    
+    if (!overlayMsgBox.classList.contains('hidden')) previousOverlayBoxTrophy = overlayMsgBox;
+    else if (!overlayFormationBox.classList.contains('hidden')) previousOverlayBoxTrophy = overlayFormationBox;
+    else if (document.getElementById('season-end-modal') && !document.getElementById('season-end-modal').classList.contains('hidden')) previousOverlayBoxTrophy = document.getElementById('season-end-modal');
+    else if (!teamEditModal.classList.contains('hidden')) previousOverlayBoxTrophy = previousOverlayBox;
     
     overlay.classList.remove('hidden');
     overlayMsgBox.classList.add('hidden');
     overlayFormationBox.classList.add('hidden');
     teamEditModal.classList.add('hidden');
-    document.getElementById('season-end-modal').classList.add('hidden');
+    if (document.getElementById('season-end-modal')) document.getElementById('season-end-modal').classList.add('hidden');
     
     trophyRoomModal.classList.remove('hidden');
     renderTrophyRoom();
@@ -2096,8 +2195,12 @@ btnOpenTrophyRoom.onclick = () => {
 
 btnCloseTrophyRoom.onclick = () => {
     trophyRoomModal.classList.add('hidden');
-    if (previousOverlayBoxTrophy) {
-        previousOverlayBoxTrophy.classList.remove('hidden');
+    let toRestore = previousOverlayBoxTrophy;
+    if (!toRestore && gameState === STATE.MENU && currentCanvasMatch && !currentCanvasMatch.finished) {
+        toRestore = overlayFormationBox;
+    }
+    if (toRestore) {
+        toRestore.classList.remove('hidden');
     } else {
         overlay.classList.add('hidden');
     }
